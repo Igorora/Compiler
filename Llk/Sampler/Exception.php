@@ -34,18 +34,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Sampler;
+namespace igorora\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
 
 /**
- * Class \Hoa\Compiler\Llk\Sampler\Exception.
+ * Class \igorora\Compiler\Llk\Sampler\Exception.
  *
- * Extending the \Hoa\Compiler\Exception class.
+ * Extending the \igorora\Compiler\Exception class.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-class Exception extends Compiler\Exception
+class Exception extends \igorora\Compiler\Exception\Exception
 {
 }

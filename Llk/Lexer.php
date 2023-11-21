@@ -34,12 +34,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk;
+namespace igorora\Compiler\Llk;
 
-use Hoa\Compiler;
+
 
 /**
- * Class \Hoa\Compiler\Llk\Lexer.
+ * Class \igorora\Compiler\Llk\Lexer.
  *
  * Lexical analyser, i.e. split a string into a set of lexeme, i.e. tokens.
  *
@@ -106,7 +106,7 @@ class Lexer
      * @param   string  $text      Text to tokenize.
      * @param   array   $tokens    Tokens to be returned.
      * @return  \Generator
-     * @throws  \Hoa\Compiler\Exception\UnrecognizedToken
+     * @throws  \igorora\Compiler\Exception\UnrecognizedToken
      */
     public function lexMe($text, array $tokens)
     {
@@ -147,7 +147,7 @@ class Lexer
             $nextToken = $this->nextToken($offset);
 
             if (null === $nextToken) {
-                throw new Compiler\Exception\UnrecognizedToken(
+                throw new \igorora\Compiler\Exception\UnrecognizedToken(
                     'Unrecognized token "%s" at line 1 and column %d:' .
                     "\n" . '%s' . "\n" .
                     str_repeat(' ', mb_strlen(substr($text, 0, $offset))) . '↑',
@@ -185,7 +185,7 @@ class Lexer
      *
      * @param   int  $offset    Offset.
      * @return  array
-     * @throws  \Hoa\Compiler\Exception\Lexer
+     * @throws  \igorora\Compiler\Exception\Lexer
      */
     protected function nextToken($offset)
     {
@@ -212,7 +212,7 @@ class Lexer
                         $i = isset($matches[1]) ? intval($matches[1]) : 1;
 
                         if ($i > ($c = count($this->_nsStack))) {
-                            throw new Compiler\Exception\Lexer(
+                            throw new \igorora\Compiler\Exception\Lexer(
                                 'Cannot shift namespace %d-times, from token ' .
                                 '%s in namespace %s, because the stack ' .
                                 'contains only %d namespaces.',
@@ -235,7 +235,7 @@ class Lexer
                     }
 
                     if (!isset($this->_tokens[$nextState])) {
-                        throw new Compiler\Exception\Lexer(
+                        throw new \igorora\Compiler\Exception\Lexer(
                             'Namespace %s does not exist, called by token %s ' .
                             'in namespace %s.',
                             2,
@@ -268,7 +268,7 @@ class Lexer
      * @param   string  $regex     Regular expression describing the lexeme.
      * @param   int     $offset    Offset.
      * @return  array
-     * @throws  \Hoa\Compiler\Exception\Lexer
+     * @throws  \igorora\Compiler\Exception\Lexer
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
@@ -286,7 +286,7 @@ class Lexer
         }
 
         if ('' === $matches[0]) {
-            throw new Compiler\Exception\Lexer(
+            throw new \igorora\Compiler\Exception\Lexer(
                 'A lexeme must not match an empty value, which is the ' .
                 'case of "%s" (%s).',
                 3,

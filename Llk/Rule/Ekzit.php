@@ -33,10 +33,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule\Ekzit.
+ * Class \igorora\Compiler\Llk\Rule\Ekzit.
  *
  * The ekzit (exit) rule.
  *

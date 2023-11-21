@@ -34,14 +34,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Sampler;
+namespace igorora\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
-use Hoa\Math;
-use Hoa\Visitor;
+use igorora\Math\Util;
+use igorora\Visitor\Visit;
+use igorora\Compiler\Llk\Parser;
+use igorora\Math\Sampler\Random;
+use igorora\Compiler\Llk\Rule\Rule;
+use igorora\Compiler\Llk\Rule\Token;
+use igorora\Compiler\Llk\Rule\Choice;
+use igorora\Compiler\Llk\Rule\Repetition;
+use igorora\Compiler\Llk\Rule\Concatenation;
+use igorora\Math\Combinatorics\Combination\Gamma;
 
 /**
- * Class \Hoa\Compiler\Llk\Sampler\Uniform.
+ * Class \igorora\Compiler\Llk\Sampler\Uniform.
  *
  * This generator aims at producing random and uniform a sequence of a fixed
  * size. We use the recursive method to count all possible sub-structures of
@@ -73,12 +80,12 @@ class Uniform extends Sampler
     /**
      * Construct a generator.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler        Compiler/parser.
-     * @param   \Hoa\Visitor\Visit        $tokenSampler    Token sampler.
+     * @param   Parser  $compiler        Compiler/parser.
+     * @param   Visit        $tokenSampler    Token sampler.
      */
     public function __construct(
-        Compiler\Llk\Parser $compiler,
-        Visitor\Visit       $tokenSampler,
+        Parser $compiler,
+        Visit       $tokenSampler,
         $length = 5
     ) {
         parent::__construct($compiler, $tokenSampler);
@@ -88,7 +95,7 @@ class Uniform extends Sampler
         }
 
         $this->setLength($length);
-        $this->_sampler = new Math\Sampler\Random();
+        $this->_sampler = new Random();
 
         return;
     }
@@ -96,11 +103,11 @@ class Uniform extends Sampler
     /**
      * The random and uniform algorithm.
      *
-     * @param   \Hoa\Compiler\Llk\Rule  $rule    Rule to start.
+     * @param   Rule  $rule    Rule to start.
      * @param   int                     $n       Size.
      * @return  string
      */
-    public function uniform(Compiler\Llk\Rule $rule = null, $n = -1)
+    public function uniform(Rule $rule = null, $n = -1)
     {
         if (null === $rule && -1 === $n) {
             $rule = $this->_rules[$this->_rootRuleName];
@@ -114,7 +121,7 @@ class Uniform extends Sampler
             return null;
         }
 
-        if ($rule instanceof Compiler\Llk\Rule\Choice) {
+        if ($rule instanceof Choice) {
             $children = $rule->getChildren();
             $stat     = [];
 
@@ -129,7 +136,7 @@ class Uniform extends Sampler
                 $b += $stat[++$e]);
 
             return $this->uniform($this->_rules[$children[$e]], $n);
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        } elseif ($rule instanceof Concatenation) {
             $children  = $rule->getChildren();
             $out       = null;
             $Γ         = $data['Γ'];
@@ -140,7 +147,7 @@ class Uniform extends Sampler
             }
 
             return $out;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        } elseif ($rule instanceof Repetition) {
             $out   =  null;
             $stat  = &$data['xy'];
             $child =  $this->_rules[$rule->getChildren()];
@@ -161,7 +168,7 @@ class Uniform extends Sampler
             }
 
             return $out;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
+        } elseif ($rule instanceof Token) {
             return $this->generateToken($rule);
         }
 
@@ -171,11 +178,11 @@ class Uniform extends Sampler
     /**
      * Recursive method applied to our problematic.
      *
-     * @param   \Hoa\Compiler\Llk\Rule  $rule    Rule to start.
+     * @param   Rule  $rule    Rule to start.
      * @param   int                     $n       Size.
      * @return  int
      */
-    public function count(Compiler\Llk\Rule $rule = null, $n = -1)
+    public function count(Rule $rule = null, $n = -1)
     {
         if (null === $rule || -1 === $n) {
             return 0;
@@ -191,13 +198,13 @@ class Uniform extends Sampler
         $out                        = &$this->_data[$ruleName][$n]['n'];
         $rule                       =  $this->_rules[$ruleName];
 
-        if ($rule instanceof Compiler\Llk\Rule\Choice) {
+        if ($rule instanceof Choice) {
             foreach ($rule->getChildren() as $child) {
                 $out += $this->count($this->_rules[$child], $n);
             }
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        } elseif ($rule instanceof Concatenation) {
             $children = $rule->getChildren();
-            $Γ        = new Math\Combinatorics\Combination\Gamma(
+            $Γ        = new Gamma(
                 count($children),
                 $n
             );
@@ -217,7 +224,7 @@ class Uniform extends Sampler
 
                 $out += $oout;
             }
-        } elseif ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        } elseif ($rule instanceof Repetition) {
             $this->_data[$ruleName][$n]['xy'] = [];
             $handle                           = &$this->_data[$ruleName][$n]['xy'];
             $child                            =  $this->_rules[$rule->getChildren()];
@@ -236,7 +243,7 @@ class Uniform extends Sampler
                 for ($α = $x; $α <= $y; ++$α) {
                     $ut         = 0;
                     $handle[$α] = ['n' => 0, 'Γ' => []];
-                    $Γ          = new Math\Combinatorics\Combination\Gamma($α, $n);
+                    $Γ          = new Gamma($α, $n);
 
                     foreach ($Γ as $γ) {
                         $oout = 1;
@@ -256,8 +263,8 @@ class Uniform extends Sampler
                     $out             += $ut;
                 }
             }
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
-            $out = Math\Util::δ($n, 1);
+        } elseif ($rule instanceof Token) {
+            $out = Util::δ($n, 1);
         }
 
         return $out;
@@ -268,7 +275,7 @@ class Uniform extends Sampler
      *
      * @param   int  $length    Length.
      * @return  int
-     * @throws  \Hoa\Compiler\Exception
+     * @throws  \igorora\Compiler\Exception\Exception
      */
     public function setLength($length)
     {

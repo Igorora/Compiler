@@ -34,14 +34,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Sampler;
+namespace igorora\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
-use Hoa\Consistency;
-use Hoa\Visitor;
+
+use igorora\Visitor\Visit;
+use igorora\Compiler\Llk\Parser;
+use igorora\Compiler\Llk\Rule\Token;
+use igorora\Consistency\Consistency;
 
 /**
- * Class \Hoa\Compiler\Llk\Sampler.
+ * Class \igorora\Compiler\Llk\Sampler.
  *
  * Sampler parent.
  *
@@ -53,7 +55,7 @@ abstract class Sampler
     /**
      * Compiler.
      *
-     * @var \Hoa\Compiler\Llk\Parser
+     * @var \igorora\Compiler\Llk\Parser
      */
     protected $_compiler         = null;
 
@@ -74,7 +76,7 @@ abstract class Sampler
     /**
      * Token sampler.
      *
-     * @var \Hoa\Visitor\Visit
+     * @var \igorora\Visitor\Visit
      */
     protected $_tokenSampler     = null;
 
@@ -103,12 +105,12 @@ abstract class Sampler
     /**
      * Construct a generator.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler        Compiler/parser.
-     * @param   \Hoa\Visitor\Visit        $tokenSampler    Token sampler.
+     * @param   Parser  $compiler        Compiler/parser.
+     * @param   Visit        $tokenSampler    Token sampler.
      */
     public function __construct(
-        Compiler\Llk\Parser $compiler,
-        Visitor\Visit       $tokenSampler
+        Parser $compiler,
+        Visit       $tokenSampler
     ) {
         $this->_compiler     = $compiler;
         $this->_tokens       = $compiler->getTokens();
@@ -122,7 +124,7 @@ abstract class Sampler
     /**
      * Get compiler.
      *
-     * @return  \Hoa\Compiler\Llk\Parser
+     * @return  \igorora\Compiler\Llk\Parser
      */
     public function getCompiler()
     {
@@ -132,12 +134,12 @@ abstract class Sampler
     /**
      * Get the AST of the current namespace skip token.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     protected function getSkipTokenAST()
     {
         if (!isset($this->_skipTokenAST[$this->_currentNamespace])) {
-            $token = new Compiler\Llk\Rule\Token(
+            $token = new Token(
                 -1,
                 'skip',
                 null,
@@ -158,10 +160,10 @@ abstract class Sampler
      * Complete a token (namespace and representation).
      * It returns the next namespace.
      *
-     * @param   \Hoa\Compiler\Llk\Rule\Token  $token    Token.
+     * @param   Token  $token    Token.
      * @return  string
      */
-    protected function completeToken(Compiler\Llk\Rule\Token $token)
+    protected function completeToken(Token $token)
     {
         if (null !== $token->getRepresentation()) {
             return $this->_currentNamespace;
@@ -212,10 +214,10 @@ abstract class Sampler
      * Generate a token value.
      * Complete and set next token namespace.
      *
-     * @param   \Hoa\Compiler\Llk\Rule\Token  $token    Token.
+     * @param   Token  $token    Token.
      * @return  string
      */
-    protected function generateToken(Compiler\Llk\Rule\Token $token)
+    protected function generateToken(Token $token)
     {
         $toNamespace = $this->completeToken($token);
         $this->setCurrentNamespace($toNamespace);
@@ -233,4 +235,4 @@ abstract class Sampler
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Compiler\Llk\Sampler\Sampler');
+Consistency::flexEntity('igorora\Compiler\Llk\Sampler\Sampler');

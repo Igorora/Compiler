@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Exception;
+namespace igorora\Compiler\Test\Unit\Exception;
 
-use Hoa\Compiler\Exception as SUT;
-use Hoa\Exception as HoaException;
-use Hoa\Test;
+use igorora\Compiler\Exception as SUT;
+use igorora\Exception as IgororaException;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Exception\Exception.
+ * Class \igorora\Compiler\Test\Unit\Exception\Exception.
  *
  * Test suite of the exception.
  *
@@ -50,12 +50,12 @@ use Hoa\Test;
  */
 class Exception extends Test\Unit\Suite
 {
-    public function case_hoa_exception()
+    public function case_igorora_exception()
     {
         $this
             ->when($result = new SUT('foo', 0))
             ->then
                 ->object($result)
-                    ->isInstanceOf(HoaException::class);
+                    ->isInstanceOf(IgororaException::class);
     }
 }

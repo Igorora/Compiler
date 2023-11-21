@@ -34,13 +34,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
-use Hoa\Compiler;
-use Hoa\Iterator;
+
+use igorora\Compiler\Llk\Lexer;
+use igorora\Iterator\Lookahead;
+use igorora\Compiler\Exception\Rule;
+use igorora\Compiler\Exception\Exception;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule\Analyzer.
+ * Class \igorora\Compiler\Llk\Rule\Analyzer.
  *
  * Analyze rules and transform them into atomic rules operations.
  *
@@ -75,7 +78,7 @@ class Analyzer
     /**
      * Lexer iterator.
      *
-     * @var \Hoa\Iterator\Lookahead
+     * @var \igorora\Iterator\Lookahead
      */
     protected $_lexer                   = null;
 
@@ -132,21 +135,21 @@ class Analyzer
      * Build the analyzer of the rules (does not analyze the rules).
      *
      * @param   array  $rules    Rule to be analyzed.
-     * @return  void
-     * @throws  \Hoa\Compiler\Exception
+     * @return  array
+     * @throws  \igorora\Compiler\Exception
      */
     public function analyzeRules(array $rules)
     {
         if (empty($rules)) {
-            throw new Compiler\Exception\Rule('No rules specified!', 0);
+            throw new Rule('No rules specified!', 0);
         }
 
         $this->_parsedRules = [];
         $this->_rules       = $rules;
-        $lexer              = new Compiler\Llk\Lexer();
+        $lexer              = new Lexer();
 
         foreach ($rules as $key => $value) {
-            $this->_lexer = new Iterator\Lookahead($lexer->lexMe($value, static::$_ppLexemes));
+            $this->_lexer = new Lookahead($lexer->lexMe($value, static::$_ppLexemes));
             $this->_lexer->rewind();
 
             $this->_ruleName = $key;
@@ -161,7 +164,7 @@ class Analyzer
             $rule    = $this->rule($pNodeId);
 
             if (null === $rule) {
-                throw new Compiler\Exception(
+                throw new Exception(
                     'Error while parsing rule %s.',
                     1,
                     $key
@@ -290,7 +293,7 @@ class Analyzer
      * Implementation of “repetition”.
      *
      * @return  mixed
-     * @throws  \Hoa\Compiler\Exception
+     * @throws  \igorora\Compiler\Exception
      */
     protected function repetition(&$pNodeId)
     {
@@ -367,7 +370,7 @@ class Analyzer
         }
 
         if (-1 != $max && $max < $min) {
-            throw new Compiler\Exception(
+            throw new Exception(
                 'Upper bound %d must be greater or ' .
                 'equal to lower bound %d in rule %s.',
                 2,
@@ -391,8 +394,8 @@ class Analyzer
      * Implementation of “simple”.
      *
      * @return  mixed
-     * @throws  \Hoa\Compiler\Exception
-     * @throws  \Hoa\Compiler\Exception\Rule
+     * @throws  \igorora\Compiler\Exception
+     * @throws  \igorora\Compiler\Exception\Rule
      */
     protected function simple(&$pNodeId)
     {
@@ -437,7 +440,7 @@ class Analyzer
             }
 
             if (false == $exists) {
-                throw new Compiler\Exception(
+                throw new Exception(
                     'Token ::%s:: does not exist in rule %s.',
                     3,
                     [$tokenName, $this->_ruleName]
@@ -480,7 +483,7 @@ class Analyzer
             }
 
             if (false == $exists) {
-                throw new Compiler\Exception(
+                throw new Exception(
                     'Token <%s> does not exist in rule %s.',
                     4,
                     [$tokenName, $this->_ruleName]
@@ -506,7 +509,7 @@ class Analyzer
 
             if (false === array_key_exists($tokenName, $this->_rules) &&
                 false === array_key_exists('#' . $tokenName, $this->_rules)) {
-                throw new Compiler\Exception\Rule(
+                throw new Rule(
                     'Cannot call rule %s() in rule %s because it does not exist.',
                     5,
                     [$tokenName, $this->_ruleName]

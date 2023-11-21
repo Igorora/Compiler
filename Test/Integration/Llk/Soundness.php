@@ -34,12 +34,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Integration\Llk;
+namespace igorora\Compiler\Test\Integration\Llk;
 
-use Hoa\Json;
+use igorora\Json;
 
 /**
- * Class \Hoa\Compiler\Test\Integration\Llk\Soundness.
+ * Class \igorora\Compiler\Test\Integration\Llk\Soundness.
  *
  * Check soundness of the LL(k) compiler.
  *

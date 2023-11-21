@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Integration\Llk;
+namespace igorora\Compiler\Test\Integration\Llk;
 
-use Hoa\Compiler as LUT;
-use Hoa\File;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\File;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Integration\Documentation.
+ * Class \igorora\Compiler\Test\Integration\Documentation.
  *
  * Test suite of the examples in the documentation.
  *
@@ -62,7 +62,7 @@ GRAMMAR;
 
         $this
             ->given(
-                $grammar = new File\ReadWrite('hoa://Test/Vfs/WithoutUnification.pp?type=file'),
+                $grammar = new File\ReadWrite('igorora://Test/Vfs/WithoutUnification.pp?type=file'),
                 $grammar->writeAll($_grammar),
                 $compiler = LUT\Llk::load($grammar)
             )
@@ -99,7 +99,7 @@ GRAMMAR;
 
         $this
             ->given(
-                $grammar = new File\ReadWrite('hoa://Test/Vfs/Unification.pp?type=file'),
+                $grammar = new File\ReadWrite('igorora://Test/Vfs/Unification.pp?type=file'),
                 $grammar->writeAll($_grammar),
                 $compiler = LUT\Llk::load($grammar)
             )
@@ -135,7 +135,7 @@ GRAMMAR;
 
         $this
             ->given(
-                $grammar = new File\ReadWrite('hoa://Test/Vfs/Palindrome.pp?type=file'),
+                $grammar = new File\ReadWrite('igorora://Test/Vfs/Palindrome.pp?type=file'),
                 $grammar->writeAll($_grammar),
                 $compiler = LUT\Llk::load($grammar)
             )

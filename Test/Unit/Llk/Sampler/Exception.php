@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Llk\Sampler;
+namespace igorora\Compiler\Test\Unit\Llk\Sampler;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Llk\Sampler\Exception as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Llk\Sampler\Exception as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Llk\Sampler\Exception.
+ * Class \igorora\Compiler\Test\Unit\Llk\Sampler\Exception.
  *
  * Test suite of the sampler exception.
  *

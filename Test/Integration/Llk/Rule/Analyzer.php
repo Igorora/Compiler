@@ -34,15 +34,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Integration\Llk\Rule;
+namespace igorora\Compiler\Test\Integration\Llk\Rule;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Llk\Rule;
-use Hoa\Compiler\Llk\Rule\Analyzer as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Llk\Rule;
+use igorora\Compiler\Llk\Rule\Analyzer as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Integration\Llk\Rule\Analyzer.
+ * Class \igorora\Compiler\Test\Integration\Llk\Rule\Analyzer.
  *
  * Test suite of the rule analyzer.
  *

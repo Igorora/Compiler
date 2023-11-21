@@ -34,10 +34,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule\Invocation.
+ * Class \igorora\Compiler\Llk\Rule\Invocation.
  *
  * Parent of entry and ekzit rules.
  *

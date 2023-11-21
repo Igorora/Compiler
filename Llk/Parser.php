@@ -34,13 +34,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk;
+namespace igorora\Compiler\Llk;
 
-use Hoa\Compiler;
-use Hoa\Iterator;
+
+use igorora\Iterator\Buffer;
+use igorora\Compiler\Llk\TreeNode;
+use igorora\Compiler\Llk\Rule\Rule;
+use igorora\Compiler\Llk\Rule\Ekzit;
+use igorora\Compiler\Llk\Rule\Entry;
+use igorora\Compiler\Llk\Rule\Token;
+use igorora\Compiler\Llk\Rule\Choice;
+use igorora\Compiler\Exception\Exception;
+use igorora\Compiler\Llk\Rule\Repetition;
+use igorora\Compiler\Llk\Rule\Concatenation;
+use igorora\Compiler\Exception\UnexpectedToken;
 
 /**
- * Class \Hoa\Compiler\Llk\Parser.
+ * Class \igorora\Compiler\Llk\Parser.
  *
  * LL(k) parser.
  *
@@ -81,7 +91,7 @@ class Parser
     /**
      * Lexer iterator.
      *
-     * @var \Hoa\Iterator\Lookahead
+     * @var \igorora\Iterator\Buffer
      */
     protected $_tokenSequence = null;
 
@@ -109,7 +119,7 @@ class Parser
     /**
      * AST.
      *
-     * @var \Hoa\Compiler\Llk\TreeNode
+     * @var \igorora\Compiler\Llk\TreeNode
      */
     protected $_tree          = null;
 
@@ -148,7 +158,7 @@ class Parser
      * @param   string  $rule    The axiom, i.e. root rule.
      * @param   bool    $tree    Whether build tree or not.
      * @return  mixed
-     * @throws  \Hoa\Compiler\Exception\UnexpectedToken
+     * @throws  UnexpectedToken
      */
     public function parse($text, $rule = null, $tree = true)
     {
@@ -159,7 +169,7 @@ class Parser
         }
 
         $lexer                = new Lexer($this->_pragmas);
-        $this->_tokenSequence = new Iterator\Buffer(
+        $this->_tokenSequence = new Buffer(
             $lexer->lexMe($text, $this->_tokens),
             $k
         );
@@ -173,8 +183,8 @@ class Parser
             $rule = $this->getRootRule();
         }
 
-        $closeRule   = new Rule\Ekzit($rule, 0);
-        $openRule    = new Rule\Entry($rule, 0, [$closeRule]);
+        $closeRule   = new Ekzit($rule, 0);
+        $openRule    = new Entry($rule, 0, [$closeRule]);
         $this->_todo = [$closeRule, $openRule];
 
         do {
@@ -212,7 +222,7 @@ class Parser
                     }
                 }
 
-                throw new Compiler\Exception\UnexpectedToken(
+                throw new UnexpectedToken(
                     'Unexpected token "%s" (%s) at line %d and column %d:' .
                     "\n" . '%s' . "\n" . str_repeat(' ', $column - 1) . '↑',
                     0,
@@ -236,7 +246,7 @@ class Parser
         $tree = $this->_buildTree();
 
         if (!($tree instanceof TreeNode)) {
-            throw new Compiler\Exception(
+            throw new Exception(
                 'Parsing error: cannot build AST, the trace is corrupted.',
                 1
             );
@@ -255,7 +265,7 @@ class Parser
         while (0 < count($this->_todo)) {
             $rule = array_pop($this->_todo);
 
-            if ($rule instanceof Rule\Ekzit) {
+            if ($rule instanceof Ekzit) {
                 $rule->setDepth($this->_depth);
                 $this->_trace[] = $rule;
 
@@ -280,13 +290,13 @@ class Parser
     /**
      * Parse current rule.
      *
-     * @param   \Hoa\Compiler\Llk\Rule  $zeRule    Current rule.
+     * @param   Rule  $zeRule    Current rule.
      * @param   int                     $next      Next rule index.
      * @return  bool
      */
     protected function _parse(Rule $zeRule, $next)
     {
-        if ($zeRule instanceof Rule\Token) {
+        if ($zeRule instanceof Token) {
             $name = $this->_tokenSequence->current()['token'];
 
             if ($zeRule->getTokenName() !== $name) {
@@ -299,7 +309,7 @@ class Parser
                 for ($skip = 0, $i = count($this->_trace) - 1; $i >= 0; --$i) {
                     $trace = $this->_trace[$i];
 
-                    if ($trace instanceof Rule\Entry) {
+                    if ($trace instanceof Entry) {
                         if (false === $trace->isTransitional()) {
                             if ($trace->getDepth() <= $this->_depth) {
                                 break;
@@ -307,7 +317,7 @@ class Parser
 
                             --$skip;
                         }
-                    } elseif ($trace instanceof Rule\Ekzit &&
+                    } elseif ($trace instanceof Ekzit &&
                               false === $trace->isTransitional()) {
                         $skip += $trace->getDepth() > $this->_depth;
                     }
@@ -316,7 +326,7 @@ class Parser
                         continue;
                     }
 
-                    if ($trace instanceof Rule\Token &&
+                    if ($trace instanceof Token &&
                         $unification === $trace->getUnificationIndex() &&
                         $value       !== $trace->getValue()) {
                         return false;
@@ -358,12 +368,12 @@ class Parser
             $this->_errorToken = $this->_tokenSequence->current();
 
             return true;
-        } elseif ($zeRule instanceof Rule\Concatenation) {
+        } elseif ($zeRule instanceof Concatenation) {
             if (false === $zeRule->isTransitional()) {
                 ++$this->_depth;
             }
 
-            $this->_trace[] = new Rule\Entry(
+            $this->_trace[] = new Entry(
                 $zeRule->getName(),
                 0,
                 null,
@@ -373,12 +383,12 @@ class Parser
 
             for ($i = count($children) - 1; $i >= 0; --$i) {
                 $nextRule      = $children[$i];
-                $this->_todo[] = new Rule\Ekzit($nextRule, 0);
-                $this->_todo[] = new Rule\Entry($nextRule, 0);
+                $this->_todo[] = new Ekzit($nextRule, 0);
+                $this->_todo[] = new Entry($nextRule, 0);
             }
 
             return true;
-        } elseif ($zeRule instanceof Rule\Choice) {
+        } elseif ($zeRule instanceof Choice) {
             $children = $zeRule->getChildren();
 
             if ($next >= count($children)) {
@@ -389,18 +399,18 @@ class Parser
                 ++$this->_depth;
             }
 
-            $this->_trace[] = new Rule\Entry(
+            $this->_trace[] = new Entry(
                 $zeRule->getName(),
                 $next,
                 $this->_todo,
                 $this->_depth
             );
             $nextRule      = $children[$next];
-            $this->_todo[] = new Rule\Ekzit($nextRule, 0);
-            $this->_todo[] = new Rule\Entry($nextRule, 0);
+            $this->_todo[] = new Ekzit($nextRule, 0);
+            $this->_todo[] = new Entry($nextRule, 0);
 
             return true;
-        } elseif ($zeRule instanceof Rule\Repetition) {
+        } elseif ($zeRule instanceof Repetition) {
             $nextRule = $zeRule->getChildren();
 
             if (0 === $next) {
@@ -411,22 +421,22 @@ class Parser
                     ++$this->_depth;
                 }
 
-                $this->_trace[] = new Rule\Entry(
+                $this->_trace[] = new Entry(
                     $name,
                     $min,
                     null,
                     $this->_depth
                 );
                 array_pop($this->_todo);
-                $this->_todo[]  = new Rule\Ekzit(
+                $this->_todo[]  = new Ekzit(
                     $name,
                     $min,
                     $this->_todo
                 );
 
                 for ($i = 0; $i < $min; ++$i) {
-                    $this->_todo[] = new Rule\Ekzit($nextRule, 0);
-                    $this->_todo[] = new Rule\Entry($nextRule, 0);
+                    $this->_todo[] = new Ekzit($nextRule, 0);
+                    $this->_todo[] = new Entry($nextRule, 0);
                 }
 
                 return true;
@@ -437,13 +447,13 @@ class Parser
                     return false;
                 }
 
-                $this->_todo[] = new Rule\Ekzit(
+                $this->_todo[] = new Ekzit(
                     $zeRule->getName(),
                     $next,
                     $this->_todo
                 );
-                $this->_todo[] = new Rule\Ekzit($nextRule, 0);
-                $this->_todo[] = new Rule\Entry($nextRule, 0);
+                $this->_todo[] = new Ekzit($nextRule, 0);
+                $this->_todo[] = new Entry($nextRule, 0);
 
                 return true;
             }
@@ -464,13 +474,13 @@ class Parser
         do {
             $last = array_pop($this->_trace);
 
-            if ($last instanceof Rule\Entry) {
+            if ($last instanceof Entry) {
                 $zeRule = $this->_rules[$last->getRule()];
-                $found  = $zeRule instanceof Rule\Choice;
-            } elseif ($last instanceof Rule\Ekzit) {
+                $found  = $zeRule instanceof Choice;
+            } elseif ($last instanceof Ekzit) {
                 $zeRule = $this->_rules[$last->getRule()];
-                $found  = $zeRule instanceof Rule\Repetition;
-            } elseif ($last instanceof Rule\Token) {
+                $found  = $zeRule instanceof Repetition;
+            } elseif ($last instanceof Token) {
                 $this->_tokenSequence->previous();
 
                 if (false === $this->_tokenSequence->valid()) {
@@ -487,7 +497,7 @@ class Parser
         $next          = $last->getData() + 1;
         $this->_depth  = $last->getDepth();
         $this->_todo   = $last->getTodo();
-        $this->_todo[] = new Rule\Entry($rule, $next);
+        $this->_todo[] = new Entry($rule, $next);
 
         return true;
     }
@@ -498,7 +508,7 @@ class Parser
      *
      * @param   int      $i            Current trace index.
      * @param   array    &$children    Collected children.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     protected function _buildTree($i = 0, &$children = [])
     {
@@ -507,7 +517,7 @@ class Parser
         while ($i < $max) {
             $trace = $this->_trace[$i];
 
-            if ($trace instanceof Rule\Entry) {
+            if ($trace instanceof Entry) {
                 $ruleName  = $trace->getRule();
                 $rule      = $this->_rules[$ruleName];
                 $isRule    = false === $trace->isTransitional();
@@ -515,7 +525,7 @@ class Parser
                 $id        = $rule->getNodeId();
 
                 // Optimization: Skip empty trace sequence.
-                if ($nextTrace instanceof Rule\Ekzit &&
+                if ($nextTrace instanceof Ekzit &&
                     $ruleName == $nextTrace->getRule()) {
                     $i += 2;
 
@@ -587,7 +597,7 @@ class Parser
                 }
 
                 $children[] = $cTree;
-            } elseif ($trace instanceof Rule\Ekzit) {
+            } elseif ($trace instanceof Ekzit) {
                 return $i + 1;
             } else {
                 if (false === $trace->isKept()) {
@@ -658,8 +668,8 @@ class Parser
      * Merge recursively.
      * Please, see self::mergeTree() to know the context.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $node       Node that receives.
-     * @param   \Hoa\Compiler\Llk\TreeNode  $newNode    Node to merge.
+     * @param   TreeNode  $node       Node that receives.
+     * @param   TreeNode  $newNode    Node to merge.
      * @return  void
      */
     protected function mergeTreeRecursive(TreeNode $node, TreeNode $newNode)
@@ -694,7 +704,7 @@ class Parser
     /**
      * Get AST.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  TreeNode
      */
     public function getTree()
     {
@@ -734,7 +744,7 @@ class Parser
     /**
      * Get the lexer iterator.
      *
-     * @return  \Hoa\Iterator\Buffer
+     * @return  \igorora\Iterator\Buffer
      */
     public function getTokenSequence()
     {
@@ -745,7 +755,7 @@ class Parser
      * Get rule by name.
      *
      * @param   string  $name    Rule name.
-     * @return  \Hoa\Compiler\Llk\Rule
+     * @return  \igorora\Compiler\Llk\Rule\Rule
      */
     public function getRule($name)
     {

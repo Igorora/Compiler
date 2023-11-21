@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<overlay xmlns="http://hoa-project.net/xyl/xylophone">
+<overlay xmlns="http://igorora-project.net/xyl/xylophone">
 <yield id="chapter">
 
   <p>Les <strong>compilateurs</strong> permettent d'<strong>analyser</strong> et
   <strong>manipuler</strong> des données <strong>textuelles</strong>. Leurs
-  applications sont très nombreuses. <code>Hoa\Compiler</code> propose de
+  applications sont très nombreuses. <code>igorora\Compiler</code> propose de
   manipuler plusieurs compilateurs selon les besoins.</p>
 
   <h2 id="Table_of_contents">Table des matières</h2>
@@ -29,7 +29,7 @@
   <strong>grammaires</strong>. Il est nécessaire d'avoir un cours détaillé pour
   bien comprendre tous ces concepts. Toutefois, nous allons essayer de
   vulgariser un minimum pour permettre une utilisation correcte de
-  <code>Hoa\Compiler</code>.</p>
+  <code>igorora\Compiler</code>.</p>
 
   <h3 id="Language_and_grammar" for="main-toc">Langage et grammaire</h3>
 
@@ -101,7 +101,7 @@ chiffre ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9</code></pre>
     <li>grammaires <strong>régulières</strong>, ou <em lang="en">regular
     grammars</em>, reconnaissant les langages réguliers.</li>
   </ol>
-  <p>Chaque niveau reconnait le niveau suivant. <code>Hoa\Compiler</code> ne
+  <p>Chaque niveau reconnait le niveau suivant. <code>igorora\Compiler</code> ne
   traite que les langages définis par les grammaires de niveau 3 et 4. Pour
   donner rapidement une idée, les grammaires régulières peuvent s'apparenter aux
   <a href="https://fr.wikipedia.org/wiki/Expression_régulière">expressions
@@ -142,12 +142,12 @@ chiffre ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9</code></pre>
   d'<strong>avancer</strong> dans la <strong>dérivation</strong> des règles de
   notre grammaire.</p>
   <p>Les analyses syntaxiques sont aussi classées en
-  <strong>catégories</strong> : LL, LR, LALR etc. <code>Hoa\Compiler</code> ne
+  <strong>catégories</strong> : LL, LR, LALR etc. <code>igorora\Compiler</code> ne
   propose que des analyseurs syntaxiques LL, pour <em lang="en">Left-to-right
   Leftmost derivation</em>, <em>i.e.</em> de la plus haute règle vers la plus
   profonde, et les règles sont dérivées de la gauche vers la droite. Là encore,
   il existe des sous-catégories, dont deux que traite
-  <code>Hoa\Compiler</code> : LL(1) et LL(*). D'une manière générale, nous
+  <code>igorora\Compiler</code> : LL(1) et LL(*). D'une manière générale, nous
   parlons d'analyseurs syntaxiques LL(<em>k</em>) : si un lexème ne permet pas
   de dériver une règle comme il faut, alors l'analyseur peut
   <strong>revenir</strong> jusqu'à <em>k</em> étapes en arrière ; nous parlons
@@ -192,7 +192,7 @@ rule4 ::= e f</code></pre>
   autrement dit, des générateurs de compilateurs. La plupart du temps, ces
   compilateurs de compilateurs utilisent un langage
   <strong>intermédiaire</strong> pour écrire une grammaire. La bibliothèque
-  <code>Hoa\Compiler</code> propose la classe <code>Hoa\Compiler\Llk\Llk</code>
+  <code>igorora\Compiler</code> propose la classe <code>igorora\Compiler\Llk\Llk</code>
   qui permet l'écriture de compilateurs de compilateurs à travers un langage
   <strong>dédié</strong>.</p>
 
@@ -201,7 +201,7 @@ rule4 ::= e f</code></pre>
   <p>Le langage PP, pour <em lang="en">PHP Parser</em>, permet d'exprimer des
   <strong>grammaires algébriques</strong>. Il s'écrit dans des fichiers portant
   l'extension <code>.pp</code> (voir le fichier
-  <a href="@central_resource:path=Library/Compiler/.Mime"><code>hoa://Library/Compiler/.Mime</code></a>).</p>
+  <a href="@central_resource:path=Library/Compiler/.Mime"><code>igorora://Library/Compiler/.Mime</code></a>).</p>
   <p>Une grammaire est constituée de <strong>lexèmes</strong> et de
   <strong>règles</strong>. La déclaration d'un lexème se fait de la manière
   suivante : <code>%token <em>namespace_in</em>:<em>name</em> <em>value</em> ->
@@ -227,7 +227,7 @@ rule4 ::= e f</code></pre>
   <a href="http://json.org/">langage JSON</a> (voir la
   <a href="https://tools.ietf.org/html/rfc4627">RFC4627</a>). La grammaire
   <strong>complète</strong> se situe dans le fichier
-  <a href="@central_resource:path=Library/Json/Grammar.pp"><code>hoa://Library/Json/Grammar.pp</code></a>.
+  <a href="@central_resource:path=Library/Json/Grammar.pp"><code>igorora://Library/Json/Grammar.pp</code></a>.
   Ainsi :</p>
   <pre><code class="language-pp">%skip   space          \s
 // Scalars.
@@ -298,7 +298,7 @@ number:
   <p>Peu de constructions mais amplement suffisantes.</p>
   <p>Enfin, la grammaire du langage PP est écrite… dans le langage PP ! Vous
   pourrez la trouver dans le fichier
-  <a href="@central_resource:path=Library/Compiler/Llk/Llk.pp"><code>hoa://Library/Compiler/Llk/Llk.pp</code></a>.</p>
+  <a href="@central_resource:path=Library/Compiler/Llk/Llk.pp"><code>igorora://Library/Compiler/Llk/Llk.pp</code></a>.</p>
 
   <h3 id="Compilation_process" for="main-toc">Processus de compilation</h3>
 
@@ -320,7 +320,7 @@ number:
       annot.push(paper.rect(0, 0, 45, 45, 22.5, '4'));
   });
   </script>
-  <p>Le processus de compilation qu'utilise <code>Hoa\Compiler\Llk\Llk</code>
+  <p>Le processus de compilation qu'utilise <code>igorora\Compiler\Llk\Llk</code>
   est classique. Il commence par analyser <strong>lexicalement</strong> la
   donnée textuelle, le mot, <em>i.e.</em> à transformer notre donnée en une
   séquence de lexèmes. L'<strong>ordre</strong> de déclaration des lexèmes est
@@ -334,23 +334,23 @@ number:
   détaillerons plus loin), ce qui permet par exemple d'ajouter de nouvelles
   <strong>contraintes</strong> qui ne peuvent pas être exprimées dans la
   grammaire, comme une vérification de type.</p>
-  <p>Manipulons un peu <code>Hoa\Compiler\Llk\Llk</code>. Cette classe est un
+  <p>Manipulons un peu <code>igorora\Compiler\Llk\Llk</code>. Cette classe est un
   <strong>assistant</strong> pour lire une grammaire au format PP facilement.
   Elle prend en seul argument un flux en lecture vers la grammaire et retourne
-  un compilateur <code>Hoa\Compiler\Llk\Parser</code> prêt à l'emploi. Sur ce
+  un compilateur <code>igorora\Compiler\Llk\Parser</code> prêt à l'emploi. Sur ce
   compilateur, nous allons appeler la méthode
-  <code>Hoa\Compiler\Llk\Parser::parse</code> pour analyser une donnée JSON. Si
+  <code>igorora\Compiler\Llk\Parser::parse</code> pour analyser une donnée JSON. Si
   la donnée est correcte, nous aurons en retour un AST, sinon une exception sera
   levée. Enfin, nous allons utiliser le visiteur
-  <code>Hoa\Compiler\Visitor\Dump</code> pour afficher notre AST :</p>
+  <code>igorora\Compiler\Visitor\Dump</code> pour afficher notre AST :</p>
   <pre><code class="language-php">// 1. Load grammar.
-$compiler = Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp'));
+$compiler = igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp'));
 
 // 2. Parse a data.
 $ast      = $compiler->parse('{"foo": true, "bar": [null, 42]}');
 
 // 3. Dump the AST.
-$dump     = new Hoa\Compiler\Visitor\Dump();
+$dump     = new igorora\Compiler\Visitor\Dump();
 echo $dump->visit($ast);
 
 /**
@@ -367,12 +367,12 @@ echo $dump->visit($ast);
  */</code></pre>
   <p>Quand nous écrivons et testons une grammaire, nous allons répéter ces trois
   tâches très <strong>régulièrement</strong>. C'est pourquoi, le script
-  <code>hoa</code> propose la commande <code>compiler:pp</code>. Cette commande
+  <code>igorora</code> propose la commande <code>compiler:pp</code>. Cette commande
   propose d'analyser une donnée par rapport à une grammaire et d'appliquer un
   visiteur si besoin sur l'AST résultant. Notons que la lecture de la donnée
   peut se faire à travers un
   <a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)"><em lang="en">pipe</em></a> :</p>
-  <pre><code class="language-shell">$ echo '[1, [1, [2, 3], 5], 8]' | hoa compiler:pp Json.pp 0 --visitor dump
+  <pre><code class="language-shell">$ echo '[1, [1, [2, 3], 5], 8]' | igorora compiler:pp Json.pp 0 --visitor dump
 >  #array
 >  >  token(number, 1)
 >  >  #array
@@ -387,7 +387,7 @@ echo $dump->visit($ast);
   commande <code>compiler:pp</code> pour plus de détails !</p>
   <p>Les analyses s'effectuent sur la règle <strong>racine</strong> mais nous
   pouvons préciser une <strong>autre règle</strong> à l'aide du deuxième
-  argument de la méthode <code>Hoa\Compiler\Llk\Parser::parse</code> :</p>
+  argument de la méthode <code>igorora\Compiler\Llk\Parser::parse</code> :</p>
   <pre><code class="language-php">$compiler->parse('{"foo": true, "bar": [null, 42]}', 'object');</code></pre>
   <p>Pour utiliser la règle racine, il suffit de passer <code>null</code>.</p>
   <p>Et enfin, pour ne pas générer l'AST mais uniquement savoir si la donnée est
@@ -405,28 +405,28 @@ var_dump($valid);
 
   <p>Les erreurs de compilation sont remontées à travers des exceptions,
   ainsi :</p>
-  <pre><code class="language-shell">$ echo '{"foo" true}' | hoa compiler:pp Json.pp 0 --visitor dump
-Uncaught exception (Hoa\Compiler\Exception\UnexpectedToken):
-Hoa\Compiler\Llk\Parser::parse(): (0) Unexpected token "true" (true) at line 1
+  <pre><code class="language-shell">$ echo '{"foo" true}' | igorora compiler:pp Json.pp 0 --visitor dump
+Uncaught exception (igorora\Compiler\Exception\UnexpectedToken):
+igorora\Compiler\Llk\Parser::parse(): (0) Unexpected token "true" (true) at line 1
 and column 8:
 {"foo" true}
        ↑
-in hoa://Library/Compiler/Llk/Parser.php at line 1</code></pre>
+in igorora://Library/Compiler/Llk/Parser.php at line 1</code></pre>
   <p>Plusieurs exceptions peuvent remonter selon le contexte :</p>
   <ul>
     <li>durant l'analyse <strong>lexicale</strong>,
-    <code>Hoa\Compiler\Exception\UnrecognizedToken</code> quand un lexème n'est
+    <code>igorora\Compiler\Exception\UnrecognizedToken</code> quand un lexème n'est
     pas reconnu, <em>i.e.</em> quand la donnée textuelle ne peut plus être
     découpée en une séquence de lexèmes, et
-    <code>Hoa\Compiler\Exception\Lexer</code> quand d'autres erreurs plus
+    <code>igorora\Compiler\Exception\Lexer</code> quand d'autres erreurs plus
     générales arrivent, par exemple si un lexème reconnaît une valeur
     vide ;</li>
     <li>durant l'analyse <strong>syntaxique</strong>,
-    <code>Hoa\Compiler\Exception\UnexpectedToken</code> quand un lexème n'est
+    <code>igorora\Compiler\Exception\UnexpectedToken</code> quand un lexème n'est
     pas attendu, <em>i.e.</em> qu'il ne permet plus de dériver les règles de la
     grammaire.</li>
   </ul>
-  <p>L'exception parente est <code>Hoa\Compiler\Exception\Exception</code>.</p>
+  <p>L'exception parente est <code>igorora\Compiler\Exception\Exception</code>.</p>
 
   <h4 id="Nodes" for="main-toc">Nœuds</h4>
 
@@ -452,10 +452,10 @@ in hoa://Library/Compiler/Llk/Parser.php at line 1</code></pre>
   <p>Si le tableau ne contient qu'une seule valeur, le nœud s'appelera
   <code>#array</code>, sinon il s'appelera <code>#bigarray</code> ; voyons
   plutôt :</p>
-  <pre><code class="language-shell">$ echo '[42]' | hoa compiler:pp Json.pp 0 --visitor dump
+  <pre><code class="language-shell">$ echo '[42]' | igorora compiler:pp Json.pp 0 --visitor dump
 >  #array
 >  >  token(number, 42)
-$ echo '[4, 2]' | hoa compiler:pp Json.pp 0 --visitor dump
+$ echo '[4, 2]' | igorora compiler:pp Json.pp 0 --visitor dump
 >  #bigarray
 >  >  token(number, 4)
 >  >  token(number, 2)</code></pre>
@@ -498,10 +498,10 @@ $ echo '[4, 2]' | hoa compiler:pp Json.pp 0 --visitor dump
       '%token  ns2:foo   FOO     -> ns1';
 
 // 1. Parse PP.
-Hoa\Compiler\Llk\Llk::parsePP($pp, $tokens, $rawRules);
+igorora\Compiler\Llk\Llk::parsePP($pp, $tokens, $rawRules);
 
 // 2. Run the lexical analyzer.
-$lexer    = new Hoa\Compiler\Llk\Lexer();
+$lexer    = new igorora\Compiler\Llk\Lexer();
 $sequence = $lexer->lexMe('fooooobzzbarrrquxFOObaz', $tokens);
 
 // 3. Pretty-print the result.
@@ -589,9 +589,9 @@ foreach ($sequence as $i => $token) {
   espace, à savoir <code>default</code>.</p>
   <p>Maintenant, enregistrons cette grammaire dans un fichier
   <code>NamespaceStack.pp</code> et utilisons l'option
-  <code>-s/--token-sequence</code> de la commande <code>hoa
+  <code>-s/--token-sequence</code> de la commande <code>igorora
   compiler:pp</code> :</p>
-  <pre><code class="language-shell">$ echo -n 'abc=te' | hoa compiler:pp NamespaceStack.pp 0 --token-sequence
+  <pre><code class="language-shell">$ echo -n 'abc=te' | igorora compiler:pp NamespaceStack.pp 0 --token-sequence
  #  namespace     token name            token value                     offset
 -------------------------------------------------------------------------------
  0  default       foo1                  a                                    0
@@ -602,7 +602,7 @@ foreach ($sequence as $i => $token) {
  5  default       end                   e                                    5
  6  default       EOF                   EOF                                  6
 
-$ echo -n 'xyz=Te' | hoa compiler:pp NamespaceStack.pp 0 --token-sequence
+$ echo -n 'xyz=Te' | igorora compiler:pp NamespaceStack.pp 0 --token-sequence
  #  namespace     token name            token value                     offset
 -------------------------------------------------------------------------------
  0  default       foo2                  x                                    0
@@ -672,7 +672,7 @@ rule:
   <p>Un arbre <strong>syntaxique abstrait</strong> représente une donnée
   textuelle sous forme <strong>structurelle</strong>. Chaque
   <strong>nœud</strong> de cet arbre est représenté par la classe
-  <code>Hoa\Compiler\Llk\TreeNode</code>. Parmis les méthodes utiles, nous
+  <code>igorora\Compiler\Llk\TreeNode</code>. Parmis les méthodes utiles, nous
   trouvons :</p>
   <ul>
     <li><code>getId</code> pour obtenir l'identifiant du nœud ;</li>
@@ -692,14 +692,14 @@ rule:
   <strong>parcourir</strong> un AST. En guise d'exemple, nous allons écrire le
   visiteur <code>PrettyPrinter</code> qui va réécrire une donnée JSON avec notre
   propre convention (espacements, retours à la ligne etc.). Un visiteur doit
-  implémenter l'interface <code>Hoa\Visitor\Visit</code> et n'aura qu'une seule
+  implémenter l'interface <code>igorora\Visitor\Visit</code> et n'aura qu'une seule
   méthode à écrire : <code>visit</code> qui prend trois arguments :
   l'élément et deux arguments accessoires (en référence et en copie). Voyons
   plutôt :</p>
-  <pre><code class="language-php">class PrettyPrinter implements Hoa\Visitor\Visit
+  <pre><code class="language-php">class PrettyPrinter implements igorora\Visitor\Visit
 {
     public function visit (
-        Hoa\Visitor\Element $element,
+        igorora\Visitor\Element $element,
         &amp;amp;$handle = null,
         $eldnah = null
     ) {
@@ -781,7 +781,7 @@ rule:
     }
 }</code></pre>
   <p>Nous allons voir tout de suite un exemple d'utilisation :</p>
-  <pre><code class="language-php">$compiler    = Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp'));
+  <pre><code class="language-php">$compiler    = igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp'));
 $ast         = $compiler->parse('{"foo": true, "bar": [null, 42]}');
 $prettyPrint = new PrettyPrinter();
 echo $prettyPrint->visit($ast);
@@ -812,7 +812,7 @@ $previous = $data['previousComputing'];</code></pre>
   des données nécessaires pour le suivant. La méthode <code>getData</code>
   n'impose aucune structuration des données, elle propose uniquement un accès à
   un tableau. Ce sera à vous de faire le reste.</p>
-  <p>Utiliser la classe <code>Hoa\Compiler\Llk\TreeNode</code> est vraiment
+  <p>Utiliser la classe <code>igorora\Compiler\Llk\TreeNode</code> est vraiment
   <strong>trivial</strong> et nous l'utiliserons la plupart du temps avec un
   visiteur.</p>
 
@@ -843,24 +843,24 @@ $previous = $data['previousComputing'];</code></pre>
   il en résulte une <strong>trace</strong>. Cette trace est un tableau composé
   de trois classes seulement :</p>
   <ul>
-    <li><code>Hoa\Compiler\Llk\Rule\Entry</code> quand l'analyseur syntaxique
+    <li><code>igorora\Compiler\Llk\Rule\Entry</code> quand l'analyseur syntaxique
     est rentré dans une règle ;</li>
-    <li><code>Hoa\Compiler\Llk\Rule\Ekzit</code> quand l'analyseur syntaxique
+    <li><code>igorora\Compiler\Llk\Rule\Ekzit</code> quand l'analyseur syntaxique
     est sorti d'une règle ;</li>
-    <li><code>Hoa\Compiler\Llk\Rule\Token</code> quand l'analyseur syntaxique a
+    <li><code>igorora\Compiler\Llk\Rule\Token</code> quand l'analyseur syntaxique a
     rencontré un lexème.</li>
   </ul>
   <p>Nous pouvons l'obtenir grâce à la méthode
-  <code>Hoa\Compiler\Llk\Parser::getTrace</code>. Pour bien comprendre cette
+  <code>igorora\Compiler\Llk\Parser::getTrace</code>. Pour bien comprendre cette
   trace, nous allons commencer par un exemple :</p>
-  <pre><code class="language-php">$compiler = Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp'));
+  <pre><code class="language-php">$compiler = igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp'));
 $ast      = $compiler->parse('{"foo": true, "bar": [null, 42]}');
 $i        = 0;
 
 foreach ($compiler->getTrace() as $element) {
-    if ($element instanceof Hoa\Compiler\Llk\Rule\Entry) {
+    if ($element instanceof igorora\Compiler\Llk\Rule\Entry) {
         echo str_repeat('>   ', ++$i), 'enter ', $element->getRule(), "\n";
-    } elseif ($element instanceof Hoa\Compiler\Llk\Rule\Token) {
+    } elseif ($element instanceof igorora\Compiler\Llk\Rule\Token) {
         echo
             str_repeat('    ', $i + 1), 'token ', $element->getTokenName(),
             ', consumed ', $element->getValue(), "\n";
@@ -939,18 +939,18 @@ foreach ($compiler->getTrace() as $element) {
   être transformée en « règles machines », chacune de ses règles est
   <strong>linéarisée</strong> selon les opérateurs du langage PP :</p>
   <ul>
-    <li><code>Hoa\Compiler\Llk\Rule\Choice</code> pour une disjonction ;</li>
-    <li><code>Hoa\Compiler\Llk\Rule\Concatenation</code> pour une
+    <li><code>igorora\Compiler\Llk\Rule\Choice</code> pour une disjonction ;</li>
+    <li><code>igorora\Compiler\Llk\Rule\Concatenation</code> pour une
     concaténation ;</li>
-    <li><code>Hoa\Compiler\Llk\Rule\Repetition</code> pour une répétition ;</li>
-    <li><code>Hoa\Compiler\Llk\Rule\Token</code> pour un lexème (déjà vu
+    <li><code>igorora\Compiler\Llk\Rule\Repetition</code> pour une répétition ;</li>
+    <li><code>igorora\Compiler\Llk\Rule\Token</code> pour un lexème (déjà vu
     précédemment).</li>
   </ul>
   <p>Toutes les règles sous ce format sont accessibles à travers la méthode
-  <code>Hoa\Compiler\Llk\Parser::getRules</code> sous la forme d'un tableau.
+  <code>igorora\Compiler\Llk\Parser::getRules</code> sous la forme d'un tableau.
   Nous allons afficher toutes les règles <strong>accessibles</strong> depuis la
   règle racine pour mieux comprendre :</p>
-  <pre><code class="language-php">$compiler = Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp'));
+  <pre><code class="language-php">$compiler = igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp'));
 
 // 1. Get all rules.
 $rules    = $compiler->getRules();
@@ -1035,7 +1035,7 @@ while (false !== current($stack)) {
   pouvons nous arrêter à la première étape, la préparation de notre compilateur,
   pour exploiter les règles afin de générer une donnée qui sera valide par
   rapport à notre grammaire.</p>
-  <p><code>Hoa\Compiler\Llk\Sampler</code> propose trois algorithmes de
+  <p><code>igorora\Compiler\Llk\Sampler</code> propose trois algorithmes de
   <strong>générations</strong> de données :</p>
   <ul>
     <li>génération aléatoire et uniforme ;</li>
@@ -1099,14 +1099,14 @@ while (false !== current($stack)) {
   <strong>guider</strong> la génération des séquences de lexèmes finales.</p>
   <p>Nous allons générer 10 données aléatoires de taille 7, c'est à dire
   composées de 7 lexèmes. Pour cela, nous allons utiliser la classe
-  <code>Hoa\Compiler\Llk\Sampler\Uniform</code> qui prend en premier argument
+  <code>igorora\Compiler\Llk\Sampler\Uniform</code> qui prend en premier argument
   notre grammaire, en deuxième le générateur de valeurs de lexèmes (ici
-  <code>Hoa\Regex\Visitor\Isototropic</code>) et enfin la taille :</p>
-  <pre><code class="language-php">$sampler = new Hoa\Compiler\Llk\Sampler\Uniform(
+  <code>igorora\Regex\Visitor\Isototropic</code>) et enfin la taille :</p>
+  <pre><code class="language-php">$sampler = new igorora\Compiler\Llk\Sampler\Uniform(
     // Grammar.
-    Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp')),
+    igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp')),
     // Token sampler.
-    new Hoa\Regex\Visitor\Isotropic(new Hoa\Math\Sampler\Random()),
+    new igorora\Regex\Visitor\Isotropic(new igorora\Math\Sampler\Random()),
     // Length.
     7
 );
@@ -1129,7 +1129,7 @@ for ($i = 0; $i &amp;lt; 10; ++$i) {
  *     9 => [ false , 5 , 79 ]
  */</code></pre>
   <p>Nous pouvons redéfinir la taille avec la méthode
-  <code>Hoa\Compiler\Llk\Sampler\Uniform::setLength</code>. Nous aurons
+  <code>igorora\Compiler\Llk\Sampler\Uniform::setLength</code>. Nous aurons
   peut-être remarqué que certains opérateurs de répétition n'ont pas de bornes
   supérieures, comme <code>+</code> ou <code>*</code> ; dans ce cas, nous la
   définissons à <em>n</em>.</p>
@@ -1143,11 +1143,11 @@ for ($i = 0; $i &amp;lt; 10; ++$i) {
   <em>n</em> (c'est le caractère borné). Un aspect très intéressant de cet
   algorithme est que l'exhaustivité est une forme de <strong>preuve</strong> !
   L'algorithme fonctionne comme un itérateur et est très simple à utiliser :</p>
-  <pre><code class="language-php">$sampler = new Hoa\Compiler\Llk\Sampler\BoundedExhaustive(
+  <pre><code class="language-php">$sampler = new igorora\Compiler\Llk\Sampler\BoundedExhaustive(
     // Grammar.
-    Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp')),
+    igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp')),
     // Token sampler.
-    new Hoa\Regex\Visitor\Isotropic(new Hoa\Math\Sampler\Random()),
+    new igorora\Regex\Visitor\Isotropic(new igorora\Math\Sampler\Random()),
     // Length.
     7
 );
@@ -1186,7 +1186,7 @@ foreach ($sampler as $i => $data) {
  */</code></pre>
   <p><em>A l'instar</em> de l'algorithme précédent, nous pouvons redéfinir la
   borne maximum avec la méthode
-  <code>Hoa\Compiler\Llk\Sampler\BoundedExhaustive::setLength</code>. Et les
+  <code>igorora\Compiler\Llk\Sampler\BoundedExhaustive::setLength</code>. Et les
   opérateurs de répétition sans borne supérieure utilisent <em>n</em>.</p>
 
   <h4 id="Grammar_coverage-based_generation" for="main-toc">Génération basée
@@ -1203,11 +1203,11 @@ foreach ($sampler as $i => $data) {
   les séquences produites, les points de choix entre des sous-règles non
   couvertes sont résolus par tirages <strong>aléatoires</strong>. L'algorithme
   fonctionne également comme un itérateur :</p>
-  <pre><code class="language-php">$sampler = new Hoa\Compiler\Llk\Sampler\Coverage(
+  <pre><code class="language-php">$sampler = new igorora\Compiler\Llk\Sampler\Coverage(
     // Grammar.
-    Hoa\Compiler\Llk\Llk::load(new Hoa\File\Read('Json.pp')),
+    igorora\Compiler\Llk\Llk::load(new igorora\File\Read('Json.pp')),
     // Token sampler.
-    new Hoa\Regex\Visitor\Isotropic(new Hoa\Math\Sampler\Random())
+    new igorora\Regex\Visitor\Isotropic(new igorora\Math\Sampler\Random())
 );
 
 foreach ($sampler as $i => $data) {
@@ -1264,17 +1264,17 @@ foreach ($sampler as $i => $data) {
   LL(1)</h2>
 
   <p>La documentation pour le compilateur LL(1), à travers la classe
-  <code>Hoa\Compiler\Ll1</code>, n'est pas encore écrite. L'objectif est
-  différent de <code>Hoa\Compiler\Llk</code> : il n'existe pas de langage
+  <code>igorora\Compiler\Ll1</code>, n'est pas encore écrite. L'objectif est
+  différent de <code>igorora\Compiler\Llk</code> : il n'existe pas de langage
   intermédiaire, les automates sont codés en dur avec des tableaux et ce type de
   compilateurs est orienté haute performance. C'est pourquoi son comportement
   est <strong>monolithique</strong>.</p>
 
   <h2 id="Conclusion" for="main-toc">Conclusion</h2>
 
-  <p><code>Hoa\Compiler</code> propose deux <strong>compilateurs de
-  compilateurs</strong> : <code>Hoa\Compiler\Llk</code> et
-  <code>Hoa\Compiler\Ll1</code>, afin de <strong>valider</strong> des données.
+  <p><code>igorora\Compiler</code> propose deux <strong>compilateurs de
+  compilateurs</strong> : <code>igorora\Compiler\Llk</code> et
+  <code>igorora\Compiler\Ll1</code>, afin de <strong>valider</strong> des données.
   Le <strong>langage PP</strong> permet d'écrire des <strong>grammaires
   algébriques</strong> de manière <strong>simple</strong> et
   <strong>naturelle</strong>. Le compilateur de compilateurs LL(<em>k</em>) est

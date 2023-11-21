@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Integration;
+namespace igorora\Compiler\Test\Integration;
 
-use Hoa\Compiler as LUT;
-use Hoa\File;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\File;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Integration\Documentation.
+ * Class \igorora\Compiler\Test\Integration\Documentation.
  *
  * Test suite of the examples in the documentation.
  *
@@ -106,7 +106,7 @@ GRAMMAR;
 
         $this
             ->given(
-                $grammar = new File\ReadWrite('hoa://Test/Vfs/Json.pp?type=file'),
+                $grammar = new File\ReadWrite('igorora://Test/Vfs/Json.pp?type=file'),
                 $grammar->writeAll($_grammar),
                 $compiler = LUT\Llk::load($grammar)
             )

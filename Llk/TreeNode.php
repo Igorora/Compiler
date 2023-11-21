@@ -34,19 +34,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk;
+namespace igorora\Compiler\Llk;
 
-use Hoa\Visitor;
+use igorora\Visitor\Visit;
+use igorora\Visitor\Element;
 
 /**
- * Class \Hoa\Compiler\Llk\TreeNode.
+ * Class \igorora\Compiler\Llk\TreeNode.
  *
  * Provide a generic node for the AST produced by LL(k) parser.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-class TreeNode implements Visitor\Element
+class TreeNode implements Element
 {
     /**
      * ID (should be something like #ruleName or token).
@@ -72,7 +73,7 @@ class TreeNode implements Visitor\Element
     /**
      * Parent.
      *
-     * @var \Hoa\Compiler\Llk\TreeNode
+     * @var \igorora\Compiler\Llk\TreeNode
      */
     protected $_parent   = null;
 
@@ -91,7 +92,7 @@ class TreeNode implements Visitor\Element
      * @param   string                      $id          ID.
      * @param   array                       $value       Value.
      * @param   array                       $children    Children.
-     * @param   \Hoa\Compiler\Llk\TreeNode  $parent    Parent.
+     * @param   \igorora\Compiler\Llk\TreeNode  $parent    Parent.
      */
     public function __construct(
         $id,
@@ -214,8 +215,8 @@ class TreeNode implements Visitor\Element
     /**
      * Prepend a child.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param   \igorora\Compiler\Llk\TreeNode  $child    Child.
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function prependChild(TreeNode $child)
     {
@@ -227,8 +228,8 @@ class TreeNode implements Visitor\Element
     /**
      * Append a child.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param   \igorora\Compiler\Llk\TreeNode  $child    Child.
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function appendChild(TreeNode $child)
     {
@@ -255,7 +256,7 @@ class TreeNode implements Visitor\Element
      * Get child.
      *
      * @param   int  $i    Index.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function getChild($i)
     {
@@ -299,8 +300,8 @@ class TreeNode implements Visitor\Element
     /**
      * Set parent.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $parent    Parent.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param   \igorora\Compiler\Llk\TreeNode  $parent    Parent.
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function setParent(TreeNode $parent)
     {
@@ -313,7 +314,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get parent.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function getParent()
     {
@@ -333,13 +334,13 @@ class TreeNode implements Visitor\Element
     /**
      * Accept a visitor.
      *
-     * @param   \Hoa\Visitor\Visit  $visitor    Visitor.
+     * @param   Visit  $visitor    Visitor.
      * @param   mixed               &$handle    Handle (reference).
      * @param   mixed               $eldnah     Handle (no reference).
      * @return  mixed
      */
     public function accept(
-        Visitor\Visit $visitor,
+        Visit $visitor,
         &$handle = null,
         $eldnah  = null
     ) {

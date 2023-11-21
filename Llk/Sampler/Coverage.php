@@ -34,13 +34,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Sampler;
+namespace igorora\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
-use Hoa\Iterator;
+use igorora\Compiler;
+use igorora\Iterator\Iterator;
+use igorora\Compiler\Llk\Rule\Rule;
+use igorora\Compiler\Llk\Rule\Ekzit;
+use igorora\Compiler\Llk\Rule\Entry;
+use igorora\Compiler\Llk\Rule\Token;
+use igorora\Compiler\Llk\Rule\Choice;
+use igorora\Compiler\Llk\Rule\Repetition;
+use igorora\Compiler\Llk\Rule\Concatenation;
 
 /**
- * Class \Hoa\Compiler\Llk\Sampler\Coverage.
+ * Class \igorora\Compiler\Llk\Sampler\Coverage.
  *
  * This generator aims at producing data that activate all the branches of the
  * grammar rules.
@@ -131,7 +138,7 @@ class Coverage extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function next()
+    public function next() : void
     {
         return;
     }
@@ -141,7 +148,7 @@ class Coverage extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function rewind()
+    public function rewind() : void
     {
         $this->_key          = -1;
         $this->_current      = null;
@@ -182,7 +189,7 @@ class Coverage extends Sampler implements Iterator
      *
      * @return  bool
      */
-    public function valid()
+    public function valid() : bool
     {
         $ruleName = $this->_rootRuleName;
 
@@ -254,14 +261,14 @@ class Coverage extends Sampler implements Iterator
     /**
      * The coverage algorithm.
      *
-     * @param   \Hoa\Compiler\Llk\Rule  $rule    Rule to cover.
+     * @param   Rule  $rule    Rule to cover.
      * @return  bool
      */
-    protected function coverage(Compiler\Llk\Rule $rule)
+    protected function coverage(Rule $rule)
     {
         $children = $rule->getChildren();
 
-        if ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        if ($rule instanceof Repetition) {
             $uncovered  = [];
             $inprogress = [];
             $already    = [];
@@ -289,19 +296,19 @@ class Coverage extends Sampler implements Iterator
                     )];
                 }
 
-                $this->_trace[] = new Compiler\Llk\Rule\Entry(
+                $this->_trace[] = new Entry(
                     $rule->getName(),
                     $this->_coveredRules,
                     $this->_todo
                 );
-                $this->_todo[]  = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[]  = new Ekzit(
                     $rule->getName(),
                     $rand
                 );
 
-                if ($this->_rules[$children] instanceof Compiler\Llk\Rule\Token) {
+                if ($this->_rules[$children] instanceof Token) {
                     for ($i = 0; $i < $rand; ++$i) {
-                        $this->_todo[] = new Compiler\Llk\Rule\Entry(
+                        $this->_todo[] = new Entry(
                             $children,
                             $this->_coveredRules,
                             $this->_todo
@@ -318,7 +325,7 @@ class Coverage extends Sampler implements Iterator
                         foreach ($sequence as $seq) {
                             $this->_trace[] = $seq;
 
-                            if ($seq instanceof Compiler\Llk\Rule\Ekzit) {
+                            if ($seq instanceof Ekzit) {
                                 $this->updateCoverage($seq);
                             }
                         }
@@ -327,18 +334,18 @@ class Coverage extends Sampler implements Iterator
             } else {
                 $rand                                         = $uncovered[rand(0, count($uncovered) - 1)];
                 $this->_coveredRules[$rule->getName()][$rand] = -1;
-                $this->_trace[]                               = new Compiler\Llk\Rule\Entry(
+                $this->_trace[]                               = new Entry(
                     $rule->getName(),
                     $this->_coveredRules,
                     $this->_todo
                 );
-                $this->_todo[] = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[] = new Ekzit(
                     $rule->getName(),
                     $rand
                 );
 
                 for ($i= 0 ; $i < $rand; ++$i) {
-                    $this->_todo[] = new Compiler\Llk\Rule\Entry(
+                    $this->_todo[] = new Entry(
                         $children,
                         $this->_coveredRules,
                         $this->_todo
@@ -347,7 +354,7 @@ class Coverage extends Sampler implements Iterator
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
+        } elseif ($rule instanceof Choice) {
             $uncovered  = [];
             $inprogress = [];
             $already    = [];
@@ -363,7 +370,7 @@ class Coverage extends Sampler implements Iterator
             }
 
             if (empty($uncovered)) {
-                $this->_trace[] = new Compiler\Llk\Rule\Entry(
+                $this->_trace[] = new Entry(
                     $rule->getName(),
                     $this->_coveredRules,
                     $this->_todo
@@ -377,7 +384,7 @@ class Coverage extends Sampler implements Iterator
                 foreach ($sequence as $seq) {
                     $this->_trace[] = $seq;
 
-                    if ($seq instanceof Compiler\Llk\Rule\Ekzit) {
+                    if ($seq instanceof Ekzit) {
                         $this->updateCoverage($seq);
                     }
                 }
@@ -394,23 +401,23 @@ class Coverage extends Sampler implements Iterator
                     )];
                 }
 
-                $this->_todo[] = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[] = new Ekzit(
                     $rule->getName(),
                     $rand
                 );
             } else {
                 $rand           = $uncovered[rand(0, count($uncovered) - 1)];
-                $this->_trace[] = new Compiler\Llk\Rule\Entry(
+                $this->_trace[] = new Entry(
                     $rule->getName(),
                     $this->_coveredRules,
                     $this->_todo
                 );
                 $this->_coveredRules[$rule->getName()][$rand] = -1;
-                $this->_todo[]                                = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[]                                = new Ekzit(
                     $rule->getName(),
                     $rand
                 );
-                $this->_todo[]  = new Compiler\Llk\Rule\Entry(
+                $this->_todo[]  = new Entry(
                     $children[$rand],
                     $this->_coveredRules,
                     $this->_todo
@@ -418,19 +425,19 @@ class Coverage extends Sampler implements Iterator
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        } elseif ($rule instanceof Concatenation) {
             $this->_coveredRules[$rule->getName()][0] = -1;
-            $this->_trace[]                           = new Compiler\Llk\Rule\Entry(
+            $this->_trace[]                           = new Entry(
                 $rule->getName(),
                 false
             );
-            $this->_todo[]  = new Compiler\Llk\Rule\Ekzit(
+            $this->_todo[]  = new Ekzit(
                 $rule->getName(),
                 false
             );
 
             for ($i = count($children) - 1; $i >= 0; --$i) {
-                $this->_todo[] = new Compiler\Llk\Rule\Entry(
+                $this->_todo[] = new Entry(
                     $children[$i],
                     false,
                     $this->_todo
@@ -438,13 +445,13 @@ class Coverage extends Sampler implements Iterator
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
-            $this->_trace[] = new Compiler\Llk\Rule\Entry(
+        } elseif ($rule instanceof Token) {
+            $this->_trace[] = new Entry(
                 $rule->getName(),
                 false
             );
             $this->_trace[] = $rule;
-            $this->_todo[]  = new Compiler\Llk\Rule\Ekzit(
+            $this->_todo[]  = new Ekzit(
                 $rule->getName(),
                 false
             );
@@ -470,7 +477,7 @@ class Coverage extends Sampler implements Iterator
                 $opened = 0;
 
                 foreach ($test as $t) {
-                    if ($t instanceof Compiler\Llk\Rule\Entry &&
+                    if ($t instanceof Entry &&
                         $t->getRule() == $rule) {
                         ++$opened;
                     }
@@ -478,7 +485,7 @@ class Coverage extends Sampler implements Iterator
                     if (0 < $opened) {
                         $out[] = $t;
 
-                        if ($t instanceof Compiler\Llk\Rule\Ekzit &&
+                        if ($t instanceof Ekzit &&
                             $t->getRule() == $rule) {
                             --$opened;
 
@@ -496,7 +503,7 @@ class Coverage extends Sampler implements Iterator
             $closed = 0;
 
             foreach ($this->_trace as $t) {
-                if ($t instanceof Compiler\Llk\Rule\Ekzit &&
+                if ($t instanceof Ekzit &&
                     $t->getRule() == $rule) {
                     ++$closed;
                 }
@@ -504,7 +511,7 @@ class Coverage extends Sampler implements Iterator
                 if (0 < $closed) {
                     $out[] = $t;
 
-                    if ($t instanceof Compiler\Llk\Rule\Ekzit &&
+                    if ($t instanceof Ekzit &&
                         $t->getRule() == $rule) {
                         --$closed;
 
@@ -531,10 +538,10 @@ class Coverage extends Sampler implements Iterator
         do {
             $pop = array_pop($this->_trace);
 
-            if ($pop instanceof Compiler\Llk\Rule\Entry) {
+            if ($pop instanceof Entry) {
                 $rule  = $this->_rules[$pop->getRule()];
-                $found = $rule instanceof Compiler\Llk\Rule\Choice ||
-                         $rule instanceof Compiler\Llk\Rule\Repetition;
+                $found = $rule instanceof Choice ||
+                         $rule instanceof Repetition;
             }
         } while (0 < count($this->_trace) && false === $found);
 
@@ -545,7 +552,7 @@ class Coverage extends Sampler implements Iterator
         $ruleName       = $pop->getRule();
         $this->_covered = $pop->getData();
         $this->_todo    = $pop->getTodo();
-        $this->_todo[]  = new Compiler\Llk\Rule\Entry(
+        $this->_todo[]  = new Entry(
             $ruleName,
             $this->_covered,
             $this->_todo
@@ -557,17 +564,17 @@ class Coverage extends Sampler implements Iterator
     /**
      * Update coverage of a rule.
      *
-     * @param   \Hoa\Compiler\Llk\Rule\Ekzit  $rule    Rule to consider.
+     * @param   Ekzit  $rule    Rule to consider.
      * @return  void
      */
-    protected function updateCoverage(Compiler\Llk\Rule\Ekzit $Rule)
+    protected function updateCoverage(Ekzit $Rule)
     {
         $ruleName = $Rule->getRule();
         $child    = $Rule->getData();
         $rule     = $this->_rules[$ruleName];
         $children = $rule->getChildren();
 
-        if ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        if ($rule instanceof Repetition) {
             if (0 === $child) {
                 $this->_coveredRules[$ruleName][$child] = 1;
             } else {
@@ -584,14 +591,14 @@ class Coverage extends Sampler implements Iterator
                     $this->_coveredRules[$ruleName][$child] = .5;
                 }
             }
-        } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
+        } elseif ($rule instanceof Choice) {
             if (true === $this->allCovered($children[$child]) ||
                 true === $this->checkRuleRoot($children[$child])) {
                 $this->_coveredRules[$ruleName][$child] = 1;
             } else {
                 $this->_coveredRules[$ruleName][$child] = .5;
             }
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        } elseif ($rule instanceof Concatenation) {
             $isCovered = true;
 
             for ($i = count($children) - 1; $i >= 0 && true === $isCovered; --$i) {
@@ -602,7 +609,7 @@ class Coverage extends Sampler implements Iterator
             }
 
             $this->_coveredRules[$ruleName][0] = true === $isCovered ? 1 : .5;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
+        } elseif ($rule instanceof Token) {
             $this->_coveredRules[$ruleName][0] = 1;
         }
 
@@ -644,11 +651,11 @@ class Coverage extends Sampler implements Iterator
         while ($i >= 0) {
             $lastRule = $this->_trace[$i];
 
-            if ($lastRule instanceof Compiler\Llk\Rule\Entry) {
+            if ($lastRule instanceof Entry) {
                 if ($lastRule->getRule() == $ruleName) {
                     ++$nb;
                 }
-            } elseif ($lastRule instanceof Compiler\Llk\Rule\Ekzit) {
+            } elseif ($lastRule instanceof Ekzit) {
                 if ($lastRule->getRule() == $ruleName) {
                     --$nb;
                 }

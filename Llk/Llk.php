@@ -34,14 +34,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk;
+namespace igorora\Compiler\Llk;
 
-use Hoa\Compiler;
-use Hoa\Consistency;
-use Hoa\Stream;
+use igorora\Stream\Stream;
+use igorora\Stream\IStream\In;
+use igorora\Compiler\Exception\Exception;
+use igorora\Compiler\Llk\Parser;
+use igorora\Consistency\Consistency;
+use igorora\Stream\IStream\Pointable;
 
 /**
- * Class \Hoa\Compiler\Llk.
+ * Class \igorora\Compiler\Llk.
  *
  * This class provides a set of static helpers to manipulate (load and save) a
  * compiler more easily.
@@ -54,20 +57,20 @@ abstract class Llk
     /**
      * Load in-memory parser from a grammar description file.
      * The grammar description language is PP. See
-     * `hoa://Library/Compiler/Llk/Llk.pp` for an example, or the documentation.
+     * `igorora://Library/Compiler/Llk/Llk.pp` for an example, or the documentation.
      *
-     * @param   \Hoa\Stream\IStream\In  $stream    Stream to read to grammar.
-     * @return  \Hoa\Compiler\Llk\Parser
-     * @throws  \Hoa\Compiler\Exception
+     * @param   In|Stream|Pointable  $stream    Stream to read to grammar.
+     * @return  Parser
+     * @throws  Exception
      */
-    public static function load(Stream\IStream\In $stream)
+    public static function load(In $stream)
     {
         $pp = $stream->readAll();
 
         if (empty($pp)) {
             $message = 'The grammar is empty';
 
-            if ($stream instanceof Stream\IStream\Pointable) {
+            if ($stream instanceof Stream && $stream instanceof Pointable) {
                 if (0 < $stream->tell()) {
                     $message .=
                         ': The stream ' . $stream->getStreamName() .
@@ -80,7 +83,7 @@ abstract class Llk
                 }
             }
 
-            throw new Compiler\Exception($message . '.', 0);
+            throw new Exception($message . '.', 0);
         }
 
         static::parsePP($pp, $tokens, $rawRules, $pragmas, $stream->getStreamName());
@@ -97,7 +100,7 @@ abstract class Llk
      * will be reset. The parser will be saved as a class, named after
      * `$className`. To retrieve the parser, one must instanciate this class.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $parser       Parser to save.
+     * @param   \igorora\Compiler\Llk\Parser  $parser       Parser to save.
      * @param   string                    $className    Parser classname.
      * @return  string
      */
@@ -227,7 +230,7 @@ abstract class Llk
         }
 
         $out .=
-            'class ' . $className . ' extends \Hoa\Compiler\Llk\Parser' . "\n" .
+            'class ' . $className . ' extends \igorora\Compiler\Llk\Parser' . "\n" .
             '{' . "\n" .
             '    public function __construct()' . "\n" .
             '    {' . "\n" .
@@ -258,7 +261,7 @@ abstract class Llk
      * @param   array   $pragmas       Extracted raw pragmas.
      * @param   string  $streamName    The name of the stream containing the grammar.
      * @return  void
-     * @throws  \Hoa\Compiler\Exception
+     * @throws  \igorora\Compiler\Exception
      */
     public static function parsePP($pp, &$tokens, &$rules, &$pragmas, $streamName)
     {
@@ -329,7 +332,7 @@ abstract class Llk
 
                     $tokens[$matches[1]][$matches[2]] = $matches[3];
                 } else {
-                    throw new Compiler\Exception(
+                    throw new Exception(
                         'Unrecognized instructions:' . "\n" .
                         '    %s' . "\n" . 'in file %s at line %d.',
                         1,
@@ -376,4 +379,4 @@ abstract class Llk
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Compiler\Llk\Llk');
+Consistency::flexEntity('igorora\Compiler\Llk\Llk');

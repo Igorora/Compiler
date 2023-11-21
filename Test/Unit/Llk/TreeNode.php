@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Llk;
+namespace igorora\Compiler\Test\Unit\Llk;
 
-use Hoa\Compiler\Llk\TreeNode as SUT;
-use Hoa\Test;
-use Hoa\Visitor;
+use igorora\Compiler\Llk\TreeNode as SUT;
+use igorora\Test;
+use igorora\Visitor;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Llk\TreeNode.
+ * Class \igorora\Compiler\Test\Unit\Llk\TreeNode.
  *
  * Test suite of the tree node.
  *

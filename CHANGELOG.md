@@ -20,10 +20,10 @@
 
 # 3.16.08.15
 
-  * Quality: Run `hoa devtools:cs`. (Ivan Enderlin, 2016-08-15T11:23:34+02:00)
+  * Quality: Run `igorora devtools:cs`. (Ivan Enderlin, 2016-08-15T11:23:34+02:00)
   * Documentation: Refresh some phrasings. (Ivan Enderlin, 2016-08-15T11:12:55+02:00)
   * Documentation: Update API documentation. (Ivan Enderlin, 2016-08-15T11:06:36+02:00)
-  * Test: Write `Hoa\Compiler\Llk\Llk` test suite. (Ivan Enderlin, 2016-08-14T17:40:38+02:00)
+  * Test: Write `igorora\Compiler\Llk\Llk` test suite. (Ivan Enderlin, 2016-08-14T17:40:38+02:00)
   * Llk: Update exception messages. (Ivan Enderlin, 2016-08-14T18:00:02+02:00)
   * Llk: PP parser only accepts horizontal spaces… (Ivan Enderlin, 2016-08-14T17:42:07+02:00)
   * Llk: Correctly order and merge skip tokens. (Ivan Enderlin, 2016-08-14T17:24:52+02:00)
@@ -67,7 +67,7 @@
   * Test: Update test cases about Unicode support. (Ivan Enderlin, 2016-08-08T08:14:04+02:00)
   * Test: Documentations are integration test suites. (Ivan Enderlin, 2016-08-08T08:03:11+02:00)
   * Test: Soundness is an integration test suite. (Ivan Enderlin, 2016-08-08T08:01:45+02:00)
-  * Test: Write `Hoa\Compiler\Llk\Lexer` test suite. (Ivan Enderlin, 2016-07-15T19:37:06+02:00)
+  * Test: Write `igorora\Compiler\Llk\Lexer` test suite. (Ivan Enderlin, 2016-07-15T19:37:06+02:00)
   * Test: Fix test suite name. (Ivan Enderlin, 2016-07-15T19:36:55+02:00)
   * Documentation: Update API and exception message. (Ivan Enderlin, 2016-07-15T19:36:40+02:00)
   * Rule: Use `is_int` to detect if transitional. (Ivan Enderlin, 2016-02-22T12:08:14+01:00)
@@ -98,17 +98,17 @@
 
   * Quality: Drop PHP5.4. (Ivan Enderlin, 2016-01-11T09:15:26+01:00)
   * Quality: Run devtools:cs. (Ivan Enderlin, 2016-01-09T08:58:15+01:00)
-  * Core: Remove `Hoa\Core`. (Ivan Enderlin, 2016-01-09T08:03:04+01:00)
+  * Core: Remove `igorora\Core`. (Ivan Enderlin, 2016-01-09T08:03:04+01:00)
   * Consistency: Update `dnew` call. (Ivan Enderlin, 2015-12-09T16:44:21+01:00)
   * Consistency: Remove a call to `_define`. (Ivan Enderlin, 2015-12-08T22:27:56+01:00)
-  * Consistency: Use `Hoa\Consistency`. (Ivan Enderlin, 2015-12-08T10:56:44+01:00)
-  * Exception: Use `Hoa\Exception`. (Ivan Enderlin, 2015-11-20T07:15:35+01:00)
+  * Consistency: Use `igorora\Consistency`. (Ivan Enderlin, 2015-12-08T10:56:44+01:00)
+  * Exception: Use `igorora\Exception`. (Ivan Enderlin, 2015-11-20T07:15:35+01:00)
   * Documentation: Format API. (Ivan Enderlin, 2015-12-16T07:38:23+01:00)
   * Fix Llk\Llk::parsePP unrecognized instructions exception (lovenunu, 2015-12-14T16:48:09+01:00)
 
 # 2.15.10.29
 
-  * Test: Specify file type with `hoa://Test/Vfs`. (Ivan Enderlin, 2015-10-29T22:07:56+01:00)
+  * Test: Specify file type with `igorora://Test/Vfs`. (Ivan Enderlin, 2015-10-29T22:07:56+01:00)
 
 # 2.15.10.21
 
@@ -136,18 +136,18 @@
 
 # 2.14.11.26
 
-  * Require `hoa/test`. (Alexis von Glasow, 2014-11-25T23:17:38+01:00)
-  * `Hoa\Visitor` has been finalized, update `composer.json`. (Ivan Enderlin, 2014-11-15T22:20:21+01:00)
+  * Require `igorora/test`. (Alexis von Glasow, 2014-11-25T23:17:38+01:00)
+  * `igorora\Visitor` has been finalized, update `composer.json`. (Ivan Enderlin, 2014-11-15T22:20:21+01:00)
   * Fix a bug in the unification. (Ivan Enderlin, 2014-11-11T15:11:18+01:00)
 
 # 2.14.11.09
 
-  * Use `hoa/iterator` `~1.0`. (Ivan Enderlin, 2014-11-09T10:58:53+01:00)
-  * Move test into `Hoa\Json`. (Ivan Enderlin, 2014-10-04T12:14:45+02:00)
-  * `Hoa\Json` has been released. (Ivan Enderlin, 2014-10-03T22:23:12+02:00)
+  * Use `igorora/iterator` `~1.0`. (Ivan Enderlin, 2014-11-09T10:58:53+01:00)
+  * Move test into `igorora\Json`. (Ivan Enderlin, 2014-10-04T12:14:45+02:00)
+  * `igorora\Json` has been released. (Ivan Enderlin, 2014-10-03T22:23:12+02:00)
   * Add the `getCompiler` method. (Ivan Enderlin, 2014-09-29T09:52:51+02:00)
   * Check soundness of other samplers. (Ivan Enderlin, 2014-09-29T09:46:47+02:00)
-  * `Hoa\Regex` is required. (Ivan Enderlin, 2014-09-28T22:14:19+02:00)
+  * `igorora\Regex` is required. (Ivan Enderlin, 2014-09-28T22:14:19+02:00)
   * Add soundness test. (Ivan Enderlin, 2014-09-28T22:09:20+02:00)
   * Fix API documentation. (Ivan Enderlin, 2014-09-26T22:35:10+02:00)
   * Remove `from`/`import` and update to PHP5.4. (Ivan Enderlin, 2014-09-26T11:14:35+02:00)

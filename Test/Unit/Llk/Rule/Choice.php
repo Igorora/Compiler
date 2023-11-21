@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Llk\Rule;
+namespace igorora\Compiler\Test\Unit\Llk\Rule;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Llk\Rule\Choice as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Llk\Rule\Choice as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Llk\Rule\Choice.
+ * Class \igorora\Compiler\Test\Unit\Llk\Rule\Choice.
  *
  * Test suite of the choice rule.
  *

@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Exception;
+namespace igorora\Compiler\Test\Unit\Exception;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Exception\FinalStateHasNotBeenReached as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Exception\FinalStateHasNotBeenReached as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Exception\FinalStateHasNotBeenReached.
+ * Class \igorora\Compiler\Test\Unit\Exception\FinalStateHasNotBeenReached.
  *
  * Test suite of the lexer state exception.
  *

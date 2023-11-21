@@ -34,15 +34,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Bin;
+namespace igorora\Compiler\Bin;
 
-use Hoa\Compiler;
-use Hoa\Consistency;
-use Hoa\Console;
-use Hoa\File;
+use igorora\Compiler;
+use igorora\Consistency;
+use igorora\Console;
+use igorora\File;
 
 /**
- * Class Hoa\Compiler\Bin\Pp.
+ * Class igorora\Compiler\Bin\Pp.
  *
  * Play with PP.
  *
@@ -83,7 +83,7 @@ class Pp extends Console\Dispatcher\Kit
                 case 'v':
                     switch (strtolower($v)) {
                         case 'dump':
-                            $visitor = 'Hoa\Compiler\Visitor\Dump';
+                            $visitor = 'igorora\Compiler\Visitor\Dump';
 
                             break;
 
@@ -164,7 +164,7 @@ class Pp extends Console\Dispatcher\Kit
     /**
      * Print trace.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler    Compiler.
+     * @param   \igorora\Compiler\Llk\Parser  $compiler    Compiler.
      * @return  void
      */
     protected function printTrace(Compiler\Llk\Parser $compiler)
@@ -201,7 +201,7 @@ class Pp extends Console\Dispatcher\Kit
     /**
      * Print token sequence.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler    Compiler.
+     * @param   \igorora\Compiler\Llk\Parser  $compiler    Compiler.
      * @param   string                    $data        Data to lex.
      * @return  void
      */

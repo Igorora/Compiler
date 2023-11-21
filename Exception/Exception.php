@@ -34,24 +34,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Exception;
+namespace igorora\Compiler\Exception;
 
-use Hoa\Consistency;
-use Hoa\Exception as HoaException;
+use igorora\Consistency\Consistency;
+use igorora\Exception\Exception as IgororaException;
 
 /**
- * Class \Hoa\Compiler\Exception.
+ * Class \igorora\Compiler\Exception.
  *
- * Extending the \Hoa\Exception\Exception class.
+ * Extending the \igorora\Exception\Exception class.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-class Exception extends HoaException
+class Exception extends IgororaException
 {
 }
 
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Compiler\Exception\Exception');
+Consistency::flexEntity('igorora\Compiler\Exception\Exception');

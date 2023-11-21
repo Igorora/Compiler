@@ -34,7 +34,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler;
+namespace igorora\Compiler;
 
 /**
  * Define the __ constant, so useful in compiler :-).
@@ -43,7 +43,7 @@ namespace Hoa\Compiler;
 !defined('__') and define('__', '__');
 
 /**
- * Class \Hoa\Compiler\Ll1.
+ * Class \igorora\Compiler\Ll1.
  *
  * Provide an abstract LL(1) compiler, based on sub-automata and stacks.
  *
@@ -356,8 +356,8 @@ abstract class Ll1
      *
      * @param   string  $in    Source code.
      * @return  void
-     * @throws  \Hoa\Compiler\Exception\FinalStateHasNotBeenReached
-     * @throws  \Hoa\Compiler\Exception\IllegalToken
+     * @throws  \igorora\Compiler\Exception\FinalStateHasNotBeenReached
+     * @throws  \igorora\Compiler\Exception\IllegalToken
      */
     public function compile($in)
     {

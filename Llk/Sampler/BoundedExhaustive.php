@@ -34,14 +34,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Sampler;
+namespace igorora\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
-use Hoa\Iterator;
-use Hoa\Visitor;
+use igorora\Visitor;
+use igorora\Compiler;
+use igorora\Iterator\Iterator;
+use igorora\Compiler\Llk\Rule\Rule;
+use igorora\Compiler\Llk\Rule\Ekzit;
+use igorora\Compiler\Llk\Rule\Entry;
+use igorora\Compiler\Llk\Rule\Token;
+use igorora\Compiler\Llk\Rule\Choice;
+use igorora\Compiler\Llk\Rule\Repetition;
+use igorora\Compiler\Llk\Rule\Concatenation;
 
 /**
- * Class \Hoa\Compiler\Llk\Sampler\BoundedExhaustive.
+ * Class \igorora\Compiler\Llk\Sampler\BoundedExhaustive.
  *
  * This generator aims at producing all possible data (exhaustive) up to a given
  * size n (bounded).
@@ -93,8 +100,8 @@ class BoundedExhaustive extends Sampler implements Iterator
     /**
      * Construct a generator.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler        Compiler/parser.
-     * @param   \Hoa\Visitor\Visit        $tokenSampler    Token sampler.
+     * @param   \igorora\Compiler\Llk\Parser  $compiler        Compiler/parser.
+     * @param   \igorora\Visitor\Visit        $tokenSampler    Token sampler.
      * @param   int                       $length          Max data length.
      */
     public function __construct(
@@ -133,7 +140,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function next()
+    public function next() : void
     {
         return;
     }
@@ -143,7 +150,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function rewind()
+    public function rewind() : void
     {
         $ruleName       = $this->_rootRuleName;
         $this->_current = null;
@@ -163,7 +170,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @return  bool
      */
-    public function valid()
+    public function valid() : bool
     {
         if (false === $this->unfold()) {
             return false;
@@ -213,34 +220,34 @@ class BoundedExhaustive extends Sampler implements Iterator
     /**
      * The bounded-exhaustive algorithm.
      *
-     * @param   \Hoa\Compiler\Llk\Rule  $rule    Rule to cover.
+     * @param   Rule  $rule    Rule to cover.
      * @param   int                     $next    Next rule.
      * @return  bool
      */
-    protected function boundedExhaustive(Compiler\Llk\Rule $rule, $next)
+    protected function boundedExhaustive(Rule $rule, $next)
     {
         $children = $rule->getChildren();
 
-        if ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        if ($rule instanceof Repetition) {
             if (0 === $next) {
-                $this->_trace[] = new Compiler\Llk\Rule\Entry(
+                $this->_trace[] = new Entry(
                     $rule->getName(),
                     $rule->getMin()
                 );
 
                 array_pop($this->_todo);
-                $this->_todo[]  = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[]  = new Ekzit(
                     $rule->getName(),
                     $rule->getMin(),
                     $this->_todo
                 );
 
                 for ($i = 0, $min = $rule->getMin(); $i < $min; ++$i) {
-                    $this->_todo[] = new Compiler\Llk\Rule\Ekzit(
+                    $this->_todo[] = new Ekzit(
                         $children,
                         0
                     );
-                    $this->_todo[] = new Compiler\Llk\Rule\Entry(
+                    $this->_todo[] = new Entry(
                         $children,
                         0
                     );
@@ -249,7 +256,7 @@ class BoundedExhaustive extends Sampler implements Iterator
                 $nbToken = 0;
 
                 foreach ($this->_trace as $trace) {
-                    if ($trace instanceof Compiler\Llk\Rule\Token) {
+                    if ($trace instanceof Token) {
                         ++$nbToken;
                     }
                 }
@@ -260,49 +267,49 @@ class BoundedExhaustive extends Sampler implements Iterator
                     return false;
                 }
 
-                $this->_todo[] = new Compiler\Llk\Rule\Ekzit(
+                $this->_todo[] = new Ekzit(
                     $rule->getName(),
                     $next,
                     $this->_todo
                 );
-                $this->_todo[] = new Compiler\Llk\Rule\Ekzit($children, 0);
-                $this->_todo[] = new Compiler\Llk\Rule\Entry($children, 0);
+                $this->_todo[] = new Ekzit($children, 0);
+                $this->_todo[] = new Entry($children, 0);
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
+        } elseif ($rule instanceof Choice) {
             if (count($children) <= $next) {
                 return false;
             }
 
-            $this->_trace[] = new Compiler\Llk\Rule\Entry(
+            $this->_trace[] = new Entry(
                 $rule->getName(),
                 $next,
                 $this->_todo
             );
             $nextRule      = $children[$next];
-            $this->_todo[] = new Compiler\Llk\Rule\Ekzit($nextRule, 0);
-            $this->_todo[] = new Compiler\Llk\Rule\Entry($nextRule, 0);
+            $this->_todo[] = new Ekzit($nextRule, 0);
+            $this->_todo[] = new Entry($nextRule, 0);
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
-            $this->_trace[] = new Compiler\Llk\Rule\Entry(
+        } elseif ($rule instanceof Concatenation) {
+            $this->_trace[] = new Entry(
                 $rule->getName(),
                 $next
             );
 
             for ($i = count($children) - 1; $i >= 0; --$i) {
                 $nextRule      = $children[$i];
-                $this->_todo[] = new Compiler\Llk\Rule\Ekzit($nextRule, 0);
-                $this->_todo[] = new Compiler\Llk\Rule\Entry($nextRule, 0);
+                $this->_todo[] = new Ekzit($nextRule, 0);
+                $this->_todo[] = new Entry($nextRule, 0);
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
+        } elseif ($rule instanceof Token) {
             $nbToken = 0;
 
             foreach ($this->_trace as $trace) {
-                if ($trace instanceof Compiler\Llk\Rule\Token) {
+                if ($trace instanceof Token) {
                     ++$nbToken;
                 }
             }
@@ -332,12 +339,12 @@ class BoundedExhaustive extends Sampler implements Iterator
         do {
             $last = array_pop($this->_trace);
 
-            if ($last instanceof Compiler\Llk\Rule\Entry) {
+            if ($last instanceof Entry) {
                 $rule  = $this->_rules[$last->getRule()];
-                $found = $rule instanceof Compiler\Llk\Rule\Choice;
-            } elseif ($last instanceof Compiler\Llk\Rule\Ekzit) {
+                $found = $rule instanceof Choice;
+            } elseif ($last instanceof Ekzit) {
                 $rule  = $this->_rules[$last->getRule()];
-                $found = $rule instanceof Compiler\Llk\Rule\Repetition;
+                $found = $rule instanceof Repetition;
             }
         } while (0 < count($this->_trace) && false === $found);
 
@@ -348,7 +355,7 @@ class BoundedExhaustive extends Sampler implements Iterator
         $rule          = $last->getRule();
         $next          = $last->getData() + 1;
         $this->_todo   = $last->getTodo();
-        $this->_todo[] = new Compiler\Llk\Rule\Entry(
+        $this->_todo[] = new Entry(
             $rule,
             $next,
             $this->_todo
@@ -362,7 +369,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @param   int  $length    Length.
      * @return  int
-     * @throws  \Hoa\Compiler\Exception
+     * @throws  \igorora\Compiler\Exception
      */
     public function setLength($length)
     {

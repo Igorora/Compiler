@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Exception;
+namespace igorora\Compiler\Test\Unit\Exception;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Exception\UnrecognizedToken as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Exception\UnrecognizedToken as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Exception\UnrecognizedToken.
+ * Class \igorora\Compiler\Test\Unit\Exception\UnrecognizedToken.
  *
  * Test suite of the unrecognized token exception.
  *

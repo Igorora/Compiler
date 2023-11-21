@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Exception;
+namespace igorora\Compiler\Test\Unit\Exception;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Exception\Rule as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Exception\Rule as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Exception\Rule.
+ * Class \igorora\Compiler\Test\Unit\Exception\Rule.
  *
  * Test suite of the rule exception.
  *

@@ -34,12 +34,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Exception;
+namespace igorora\Compiler\Exception;
 
 /**
- * Class \Hoa\Compiler\Exception\UnrecognizedToken.
+ * Class \igorora\Compiler\Exception\UnrecognizedToken.
  *
- * Extending the \Hoa\Compiler\Exception class.
+ * Extending the \igorora\Compiler\Exception class.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License

@@ -34,12 +34,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
-use Hoa\Compiler;
+use igorora\Compiler;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule\Repetition.
+ * Class \igorora\Compiler\Llk\Rule\Repetition.
  *
  * The repetition rule.
  *

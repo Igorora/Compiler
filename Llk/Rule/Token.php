@@ -34,13 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
-use Hoa\Compiler;
-use Hoa\File;
+
+use igorora\File\Read;
+use igorora\Compiler\Llk\Llk;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule\Token.
+ * Class \igorora\Compiler\Llk\Rule\Token.
  *
  * The token rule.
  *
@@ -50,9 +51,9 @@ use Hoa\File;
 class Token extends Rule
 {
     /**
-     * LL(k) compiler of hoa://Library/Regex/Grammar.pp.
+     * LL(k) compiler of igorora://Library/Regex/Grammar.pp.
      *
-     * @var \Hoa\Compiler\Llk\Parser
+     * @var \igorora\Compiler\Llk\Parser
      */
     protected static $_regexCompiler = null;
 
@@ -80,7 +81,7 @@ class Token extends Rule
     /**
      * AST of the regex.
      *
-     * @var \Hoa\Compiler\Llk\TreeNode
+     * @var \igorora\Compiler\Llk\TreeNode
      */
     protected $_ast                  = null;
 
@@ -198,15 +199,15 @@ class Token extends Rule
     /**
      * Get AST of the token representation.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return  \igorora\Compiler\Llk\TreeNode
      */
     public function getAST()
     {
         if (null === static::$_regexCompiler) {
-            $stream = new File\Read('hoa://Library/Regex/Grammar.pp');
+            $stream = new Read('igorora://Library/Regex/Grammar.pp');
             $stream->rewind();
 
-            static::$_regexCompiler = Compiler\Llk::load($stream);
+            static::$_regexCompiler = Llk::load($stream);
         }
 
         if (null === $this->_ast) {

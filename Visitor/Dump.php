@@ -34,19 +34,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Visitor;
+namespace igorora\Compiler\Visitor;
 
-use Hoa\Visitor;
+use igorora\Visitor\Visit;
 
 /**
- * Class \Hoa\Compiler\Visitor\Dump.
+ * Class \igorora\Compiler\Visitor\Dump.
  *
  * Dump AST produced by LL(k) compiler.
  *
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-class Dump implements Visitor\Visit
+class Dump implements Visit
 {
     /**
      * Indentation depth.
@@ -60,7 +60,7 @@ class Dump implements Visitor\Visit
     /**
      * Visit an element.
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
+     * @param   \igorora\Visitor\Element  $element    Element to visit.
      * @param   mixed                 &$handle    Handle (reference).
      * @param   mixed                 $eldnah     Handle (not reference).
      * @return  mixed

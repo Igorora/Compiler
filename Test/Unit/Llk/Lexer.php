@@ -34,14 +34,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Llk;
+namespace igorora\Compiler\Test\Unit\Llk;
 
-use Hoa\Compiler as LUT;
-use Hoa\Compiler\Llk\Lexer as SUT;
-use Hoa\Test;
+use igorora\Compiler as LUT;
+use igorora\Compiler\Llk\Lexer as SUT;
+use igorora\Test;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Llk\Lexer.
+ * Class \igorora\Compiler\Test\Unit\Llk\Lexer.
  *
  * Test suite of the lexer class.
  *

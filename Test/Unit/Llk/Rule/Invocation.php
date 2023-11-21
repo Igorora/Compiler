@@ -34,13 +34,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Test\Unit\Llk\Rule;
+namespace igorora\Compiler\Test\Unit\Llk\Rule;
 
-use Hoa\Test;
-use Mock\Hoa\Compiler\Llk\Rule\Invocation as SUT;
+use igorora\Test;
+use Mock\igorora\Compiler\Llk\Rule\Invocation as SUT;
 
 /**
- * Class \Hoa\Compiler\Test\Unit\Llk\Rule\Invocation.
+ * Class \igorora\Compiler\Test\Unit\Llk\Rule\Invocation.
  *
  * Test suite of an invocation rule.
  *

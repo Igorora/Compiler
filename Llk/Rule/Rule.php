@@ -34,12 +34,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Hoa\Compiler\Llk\Rule;
+namespace igorora\Compiler\Llk\Rule;
 
-use Hoa\Consistency;
+use igorora\Consistency\Consistency;
 
 /**
- * Class \Hoa\Compiler\Llk\Rule.
+ * Class \igorora\Compiler\Llk\Rule\Rule.
  *
  * Rule parent.
  *
@@ -181,7 +181,7 @@ abstract class Rule
     {
         $old = $this->_nodeId;
 
-        if (false !== $pos = strpos($nodeId, ':')) {
+        if ($nodeId && (false !== $pos = strpos($nodeId, ':'))) {
             $this->_nodeId      = substr($nodeId, 0, $pos);
             $this->_nodeOptions = str_split(substr($nodeId, $pos + 1));
         } else {
@@ -292,4 +292,4 @@ abstract class Rule
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Compiler\Llk\Rule\Rule');
+Consistency::flexEntity('igorora\Compiler\Llk\Rule\Rule');
